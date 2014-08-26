@@ -1,0 +1,22 @@
+/**
+ * Images
+ */
+
+img {
+  max-width: 100%;
+  height: auto;
+
+  &.nonresponsive {
+    max-width: auto;
+  }
+}
+
+// Rounded corners
+img.rounded {
+  @include border-radius($radius);
+}
+
+// Perfect circle
+img.circle {
+  border-radius: 50%; // set radius in percents
+}

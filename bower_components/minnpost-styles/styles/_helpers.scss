@@ -1,0 +1,99 @@
+/**
+ * Helper classes, repeated from mixins.
+ */
+
+
+// Mixin classes
+.inline-block {
+  @include inline-block();
+}
+
+.clearfix, .cf {
+  @include clearfix();
+}
+
+.tab-focus {
+  @include tab-focus();
+}
+
+.center-block {
+  @include center-block();
+}
+
+.text-overflow {
+  @include text-overflow();
+}
+
+.text-hide {
+  @include text-hide();
+}
+
+.screen-reader-only, .sr-only {
+  @include screen-reader-only();
+}
+
+.hide, .hidden {
+  @include hidden();
+}
+
+.print-visible {
+  @include print-visible();
+}
+
+.print-hidden {
+  @include print-hidden();
+}
+
+// Simple utilities
+.xxsmall {
+  font-size: $text-size-small * 0.5 !important;
+}
+
+.xsmall {
+  font-size: $text-size-small * 0.75 !important;
+}
+
+.small {
+  font-size: $text-size-small !important;
+}
+
+.large {
+  font-size: $text-size-large !important;
+}
+
+.xlarge {
+  font-size: $text-size-large * 1.5 !important;
+}
+
+.xxlarge {
+  font-size: $text-size-large * 2.25 !important;
+}
+
+.xxxlarge {
+  font-size: $text-size-large * 3 !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+
+.show {
+  display: block;
+}
+
+.show-inline {
+  display: inline;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.space-bottom { margin-bottom: $space-vertical-margin; }
+.space-top { margin-bottom: $space-vertical-margin; }
+.space-left { margin-bottom: $space-horizontal-margin; }
+.space-right { margin-bottom: $space-horizontal-margin; }

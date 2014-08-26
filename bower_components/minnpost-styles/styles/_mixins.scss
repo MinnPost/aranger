@@ -1,0 +1,182 @@
+/**
+ * Mixins
+ */
+
+/**
+ * Helper utilities
+ */
+
+// Cross-browser inline block
+@mixin inline-block() {
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  margin-right: $space-horizontal-margin * 0.25;
+}
+
+// Clearfix
+@mixin clearfix() {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+// WebKit-style focus
+@mixin tab-focus() {
+  // Default
+  outline: thin dotted;
+  // WebKit
+  outline: 3px auto $color-gray;
+  outline-offset: -2px;
+}
+
+// General focus for block elements
+@mixin focus-block() {
+  border-color: $color-gray;
+  outline: 0;
+  @include box-shadow(inset 0 1px 1px black(0.075), 0 0 2px black(0.5));
+}
+
+// Center-align a block level element
+@mixin center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Hides text, but still read by screen reader
+@mixin text-hide() {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+// Hide from screenreaders and browsers
+@mixin hidden() {
+  display: none;
+  visibility: hidden;
+}
+
+// Screen reader only
+@mixin screen-reader-only() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+// Print only
+@mixin print-visible {
+  @media print {
+    display: block;
+  }
+}
+
+// Print hidden
+@mixin print-hidden {
+  @media print {
+    @include hidden();
+  }
+}
+
+// Colunn
+@mixin column {
+  position: relative;
+  min-height: 1px;
+  float: left;
+  padding-left: $grid-gutter;
+  padding-right: $grid-gutter;
+  width: 100%;
+}
+
+// Responsive table
+@mixin responsive-table {
+  width: 100%;
+  margin-bottom: $space;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  border: 1px solid $color-light-gray;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
+
+  table {
+    margin-bottom: 0;
+  }
+}
+
+
+/**
+ * Mixins with parameters
+ */
+
+// Placeholder text for color
+@mixin placeholder-color($color) {
+  &:-moz-placeholder            { color: $color; } // Firefox 4-18
+  &::-moz-placeholder           { color: $color;   // Firefox 19+
+                                  opacity: 1; } // See https://github.com/twbs/bootstrap/pull/11526
+  &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}
+
+// Opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  // IE8 filter
+  $opacity-ie: ($opacity * 100);
+  filter: "alpha(opacity=$opacity-ie)";
+}
+
+// Animation
+@mixin animation($value) {
+  -webkit-animation: $value;
+  -moz-animation: $value;
+  -o-animation: $value;
+  animation: $value;
+}
+
+
+/**
+ * Responsive
+ */
+
+
+// Retina images
+//
+// Short retina mixin for setting background-image and -size
+@mixin img-retina($file-1x, $file-2x, $width-1x, $height-1x) {
+  background-image: url("$file-1x");
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: url("$file-2x");
+    background-size: $width-1x $height-1x;
+  }
+}

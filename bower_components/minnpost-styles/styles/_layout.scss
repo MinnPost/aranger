@@ -1,0 +1,22 @@
+/**
+ * Layout and spacing styles.
+ */
+
+
+
+// General spacing classes
+.section {
+  margin-bottom: 5em;
+}
+
+.spacer {
+  height: $space;
+}
+
+.top-spacer {
+  margin-top: $space-vertical-margin;
+}
+
+.bottom-spacer {
+  margin-bottom: $space-vertical-margin;
+}

@@ -1,0 +1,89 @@
+/**
+ * Datatables
+ */
+
+.datatable {
+
+  .dataTables_processing {
+    display: none;
+  }
+
+  .dataTables_filter {
+    text-align: right;
+    margin-bottom: $space-vertical-margin * 0.5;
+
+    label, input {
+      @include inline-block();
+    }
+  }
+
+  .dataTables_paginate {
+    text-align: right;
+
+    a {
+      margin-right: $space-horizontal-margin;
+    }
+
+    .icon-text {
+      @include screen-reader-only();
+    }
+
+    .paginate_disabled_previous,
+    .paginate_disabled_next {
+      color: $color-gray;
+    }
+
+    .paginate_enabled_previous,
+    .paginate_enabled_next {
+      cursor: pointer;
+    }
+  }
+
+  .dataTables_info {
+    color: $color-light-gray;
+  }
+
+  table {
+
+    .sorting,
+    .sorting_asc,
+    .sorting_desc {
+      cursor: pointer;
+    }
+
+    .sorting_asc,
+    .sorting_desc,
+    .sorting_1 {
+      border-left: 2px solid $color-light-gray;
+      border-right: 2px solid $color-light-gray;
+    }
+
+    .sorting_asc,
+    .sorting_desc {
+      border-top: 2px solid $color-light-gray;
+    }
+
+    tbody tr:last-child .sorting_1 {
+      border-bottom: 2px solid $color-light-gray;
+    }
+
+    .sorting:before {
+      @extend .fa;
+      color: $color-light-gray;
+      content: "\f0dc";
+      float: right;
+    }
+
+    .sorting_asc:before {
+      @extend .sorting:before;
+      color: $color-dark-gray;
+      content: "\f0dd";
+    }
+
+    .sorting_desc:before {
+      @extend .sorting:before;
+      color: $color-dark-gray;
+      content: "\f0de";
+    }
+  }
+}

@@ -1,0 +1,210 @@
+/**
+ * Typography styles.
+ */
+
+& {
+  font-size: $font-size-base;
+  line-height: $text-line-height;
+  font-family: $font-text;
+  color: $color-text;
+}
+
+// Fonts
+.font-text {
+  font-family: $font-text !important;
+}
+.font-heading {
+  font-family: $font-heading !important;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  color: $color-heading;
+  font-family: $font-heading;
+  font-weight: bold;
+  margin-top: $space-vertical-margin * 0.25;
+  margin-bottom: $space-vertical-margin * 0.5;
+  line-height: $text-line-height;
+}
+
+h1 {
+  font-size: floor($font-size-base * 2.6);
+}
+
+h2 {
+  font-size: floor($font-size-base * 2.25);
+}
+
+h3 {
+  font-size: floor($font-size-base * 1.85);
+}
+
+h4 {
+  font-size: floor($font-size-base * 1.5);
+}
+
+h5 {
+  font-size: $font-size-base;
+}
+
+h6 {
+  font-size: floor($font-size-base * 0.85);
+}
+
+// Links
+a,
+a:visited {
+  color: $color-link;
+  text-decoration: none;
+}
+a:hover,
+a:visited:hover {
+  color: darken($color-link, 10%);
+  text-decoration: underline;
+}
+
+// Paragraph
+p {
+  margin-bottom: $space;
+  line-height: $text-line-height;
+}
+
+// Various text modifiers
+small,
+.small {
+  font-size: $text-size-small;
+}
+strong,
+.strong {
+  font-weight: bold;
+}
+em,
+.em {
+  font-style: italic;
+}
+
+// Alignment
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-justify { text-align: justify; }
+
+// Abbreviations
+abbr,
+.abbr {
+  cursor: help;
+  border-bottom: 1px dotted $color-dark-gray;
+}
+
+// Blockquotes
+blockquote,
+.blockquote {
+  display: block;
+  padding: ($space * 0.5) $space;
+  margin-bottom: $space;
+  border-left: 5px solid $color-lighter-gray;
+
+  small,
+  .small {
+    color: $color-light-gray;
+
+    &:before {
+      content: '\2014 \00A0';
+    }
+  }
+}
+
+// Lists
+ul,
+ol {
+  margin: 0 0 $space ($space * 2);
+
+  li {
+    margin-bottom: $space-vertical-margin * .25;
+  }
+
+  ul,
+  ol {
+    margin-top: $space-vertical-margin * .25;
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: disc;
+
+  ul {
+    list-style-type: circle;
+  }
+}
+
+ol {
+  list-style-type: decimal;
+
+  ol {
+    list-style-type: lower-roman;
+  }
+}
+
+// Text block
+.text-block {
+  display: block;
+  max-width: 32em;
+  margin: 0 auto;
+
+  &.left {
+    margin: 0 auto 0 0;
+  }
+
+  &.right {
+    margin: 0 0 0 auto;
+  }
+}
+
+// Non-heading labels
+.component-label {
+  font-weight: bold;
+  font-style: $font-heading;
+  font-size: $font-size-base * 1.25;
+  margin-bottom: $space-vertical-margin * 0.5;
+}
+
+// Footnotes, credits, captions
+.footnote,
+.credit {
+  font-size: $text-size-small;
+  color: $color-light-gray;
+  margin-top: $space-vertical-margin;
+  margin-bottom: $space-vertical-margin;
+  padding-top: $space-vertical-padding * 2;
+}
+
+.footnote {
+  margin-top: $space-vertical-margin * 2;
+  border-top: 1px solid $color-light-gray;
+}
+
+.caption {
+  font-size: $text-size-small;
+  margin-bottom: $space-vertical-margin;
+}
+
+// Code styles
+code {
+  font-family: $font-monospace;
+  line-height: $text-line-height;
+  font-size: 0.9em;
+  background-color: $color-lightest-gray;
+  padding: 2px 4px;
+}
+
+pre {
+  margin-bottom: $space;
+  background-color: $color-lightest-gray;
+  padding: $space;
+
+  code {
+    background-color: inherit;
+    padding: 0;
+  }
+}

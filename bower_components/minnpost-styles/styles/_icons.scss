@@ -1,0 +1,90 @@
+/**
+ * Icons provided by Font Awesome.
+ *
+ * A bit of styling to ensure they work correctly given that we prefix all
+ * the styles.  There should be a better way to handle this.
+ */
+
+
+.fa,
+.loading-block,
+.loading {
+  @include inline-block();
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* makes the font 33% larger relative to the icon container */
+.fa-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.fa-2x {
+  font-size: 2em;
+}
+.fa-3x {
+  font-size: 3em;
+}
+.fa-4x {
+  font-size: 4em;
+}
+.fa-5x {
+  font-size: 5em;
+}
+.fa-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+.fa-ul {
+  padding-left: 0;
+  margin-left: 2.142857142857143em;
+  list-style-type: none;
+}
+.fa-ul > li {
+  position: relative;
+}
+.fa-li {
+  position: absolute;
+  left: -2.142857142857143em;
+  width: 2.142857142857143em;
+  top: 0.14285714285714285em;
+  text-align: center;
+}
+.fa-li.fa-lg {
+  left: -1.8571428571428572em;
+}
+.fa-border {
+  padding: .2em .25em .15em;
+  border: solid 0.08em #eeeeee;
+  border-radius: .1em;
+}
+
+
+// Loading icon and loading block
+.loading-block,
+.loading {
+  font-size: 2em;
+
+  // Spinner icon
+  &:before {
+    content: "\f110";
+  }
+
+  // Spin icon, spin is provided by
+  @include animation(spin 2s infinite linear);
+}
+
+.loading-block {
+  display: block;
+  padding: 1em 2em;
+  text-align: center;
+}
+
+.loading-container {
+  padding: 1em 2em;
+  text-align: center;
+}

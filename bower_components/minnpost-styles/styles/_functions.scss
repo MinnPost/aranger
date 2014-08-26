@@ -1,0 +1,13 @@
+/**
+ * Functions
+ */
+
+// Black with opacity
+@function black($opacity) {
+  @return rgba(0, 0, 0, $opacity)
+}
+
+// White with opacity
+@function white($opacity) {
+  @return rgba(255, 255, 255, $opacity)
+}

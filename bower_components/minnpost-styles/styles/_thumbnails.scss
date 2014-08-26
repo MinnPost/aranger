@@ -1,0 +1,40 @@
+/**
+ * Thumbnails.  Not just for images, necessarily.
+ */
+
+
+.thumbnail {
+  display: block;
+  padding: $space-vertical-padding;
+  margin-bottom: $space;
+  line-height: $text-line-height;
+  background-color: none;
+  border: 1px solid $color-lighter-gray;
+  @include transition(all .2s ease-in-out);
+
+  > img,
+  a > img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  // Image captions
+  .caption,
+  caption {
+    padding: $space-vertical-padding $space-horizontal-padding;
+    color: $color-light-gray;
+  }
+
+  &.thumbnail-inline {
+    @include inline-block();
+  }
+}
+
+a.thumbnail {
+  // Add a hover state for linked versions only
+  &:hover,
+  &:focus,
+  &.active {
+    border-color: $color-link;
+  }
+}

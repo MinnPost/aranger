@@ -1,0 +1,72 @@
+/**
+ * Styles for StoryMapJS
+ */
+
+.storymap {
+  width: 100%;
+  height: 30em;
+
+  &.expanded {
+    border-top: 2px solid $color-gray;
+    border-bottom: 2px solid $color-gray;
+  }
+
+  h2 {
+    line-height: 1.1em;
+    font-size: floor($font-size-base * 1.85);
+  }
+
+  &.vco-layout-landscape {
+
+    .vco-storyslider .vco-slider-background {
+      background-image: none;
+      background-color: $color-white;
+      margin-left: 0;
+      border-left: 1px solid $color-light-gray;
+      @include opacity(0.85);
+    }
+
+    .vco-map {
+
+      .leaflet-top {
+        top: 0px;
+      }
+
+      .vco-mapmarker-active{
+        color: #0D57A0;
+      }
+    }
+  }
+
+  .vco-slide .vco-slide-content-container .vco-slide-content {
+    padding-top: $space-vertical-margin * 3;
+    padding-bottom: $space-vertical-margin;
+  }
+
+  .vco-media .vco-media-content-container .vco-media-content {
+    margin-bottom: $space-vertical-margin / 2;
+  }
+
+  &.vco-storymap {
+
+    .vco-caption,
+    .vco-credit {
+      margin-bottom: $space-vertical-margin / 2;
+    }
+
+    .vco-menubar .vco-menubar-button {
+      @include inline-block();
+      padding: ($space-vertical-padding * 2) $space-horizontal-padding;
+      color: $color-link;
+      margin: 0;
+      background: inherit;
+      font-weight: normal;
+
+      &:hover {
+        background: inherit;
+        color: darken($color-link, 10%);
+        text-decoration: underline;
+      }
+    }
+  }
+}

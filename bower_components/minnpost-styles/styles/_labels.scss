@@ -1,0 +1,40 @@
+/**
+ * Labels
+ */
+
+
+.label {
+  display: inline;
+  padding: $space-vertical-padding $space-horizontal-padding;
+  font-size: $text-size-small;
+  font-weight: bold;
+  line-height: $text-size;
+  color: $color-white;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+
+  background-color: $color-dark-gray;
+
+  // Add hover effects, but only for links
+  &[href] {
+    &:hover,
+    &:focus {
+      color: $color-white;
+      text-decoration: none;
+      cursor: pointer;
+      background-color: $color-dark-gray;
+    }
+  }
+
+  // Empty labels collapse automatically (not available in IE8)
+  &:empty {
+    display: none;
+  }
+
+  // Quick fix for labels in buttons
+  .btn & {
+    position: relative;
+    top: -1px;
+  }
+}

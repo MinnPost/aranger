@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>    <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>     <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>     <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>aRanger</title>
+    <meta name="description" content="Arrange things in a grid">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="bower_components/minnpost-styles/dist/minnpost-styles.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+  </head>
+  <body class="mp">
+    <noscript>
+      <p class="noscript-note">This application requires Javascript which is used to make your web browser more interactive.  If this message does not go away, please consider enabling Javascript.  Here are <a href="http://www.enable-javascript.com/" target="_blank">instructions on how to enable JavaScript in your web browser</a>.</p>
+    </noscript>
+    <!--[if lte IE 8]>
+    <div class="browser-upgrade-note">
+      <h4>Consider upgrading your browser</h4>
+      <p>Your <strong>Internet Browser</strong> is the application you use to navigate webpages on the internet.  You are currently using an older version of Internet Explorer.  This application may not be full-featured because you are using such an old browser.</p>
+
+      <p><a href="http://browsehappy.com/" target="_blank">Click here to find out about upgrading to a newer browsers</a>.</p>
+    </div>
+    <![endif]-->
+
+
+    <div class="minnpost-page-container" id="main-template-view">
+    </div>
+
+    <script type="template/ractive" id="main-template-container">
+      <h1>aRanger</h1>
+      <p class="description">A simple interface to arbitrarily arrange items in a grid, for something like a cartogram.</p>
+
+      <div class="input">
+        <h3>Input</h3>
+
+        <p>Input a JSON array of items, such as <code>['a', 'b', 'c', 'd']</code>.</p>
+
+        <textarea class="input-text" value="{{ itemsString }}"></textarea>
+      </div>
+
+
+      <div class="arrange">
+        <h3>Arrange</h3>
+        <div class="aranger-grid cf">
+          {{#cellsArray:c}}
+            {{>cell}}
+          {{/cellsArray}}
+        </div>
+      </div>
+
+      <div class="footnote">
+        <p>Made by MinnPost</p>
+      </div>
+
+      <!-- {{>cell}} -->
+        <div class="grid-cell {{#if (c % columns === columns - 1)}}row-end{{/if}} {{#if (c % columns === 0)}}row-start{{/if}}" data-index="{{ c }}"
+          on-dragenter="cdragenter"
+          on-dragover="cdragover"
+          on-dragleave="cdragleave"
+          on-drop="cdrop">
+          {{#if cellsArray[c]}}
+            <div data-index="{{ c }}" class="grid-item"
+              draggable="true"
+              on-dragstart="idragstart"
+              on-dragend="idragend">
+                {{ cellsArray[c] }}
+              </div>
+          {{/if}}
+        </td>
+      <!-- {{/cell}} -->
+    </script>
+
+
+
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/ractive/ractive.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

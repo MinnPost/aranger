@@ -1,0 +1,57 @@
+
+
+.mp h1 {
+  margin-bottom: 0.15em;
+}
+
+.mp .description {
+  margin-bottom: 3em;
+}
+
+.mp .input {
+  margin-bottom: 3em;
+}
+
+.mp .arrange {
+  margin-bottom: 3em;
+}
+
+.mp .aranger-grid {
+  width: auto;
+  border-collapse: collapse;
+}
+
+.mp .aranger-grid .grid-cell {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  border: 1px dashed #BCBCBC;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
+
+
+.mp .aranger-grid .grid-cell.row-start {
+  clear: both;
+}
+
+.mp .aranger-grid .grid-cell .grid-item {
+  display: block;
+  background-color: #232323;
+  width: 24px;
+  height: 24px;
+  font-size: 13px;
+  line-height: 24px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.mp .aranger-grid .grid-cell .grid-item.dragging {
+  opacity: 0.5;
+}
+
+.mp .aranger-grid .grid-cell.dragover {
+  border: 1px solid red;
+}

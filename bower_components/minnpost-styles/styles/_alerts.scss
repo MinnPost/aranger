@@ -1,0 +1,35 @@
+/**
+ * Alert messages.
+ */
+
+// TODO: close
+
+
+.alert {
+  padding: $space-horizontal-padding;
+  margin-bottom: $space-horizontal-margin;
+  border: 1px solid transparent;
+
+  background-color: $color-lighter-gray;
+
+  // Headings for larger alerts
+  h4 {
+    margin-top: 0;
+    color: inherit;
+  }
+
+  // Improve alignment and spacing of inner content
+  > p,
+  > ul {
+    margin-bottom: 0;
+  }
+  > p + p {
+    margin-top: $space-horizontal-margin / 2;
+  }
+
+  @each $b in $colors-information {
+    &.#{nth($b, 1)} {
+      background-color: #{nth($b, 2)};
+    }
+  }
+}

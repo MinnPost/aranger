@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MinnPost Styles</title>
+    <meta name="description" content="The MinnPost super-fly style guide, specifically focused on interactive and news applications made by the MinnData team.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base target=”_blank” />
+
+    <link rel="stylesheet" href="//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="dist/minnpost-styles.min.css">
+    <link rel="stylesheet" href="demo/demo.css">
+  </head>
+  <body class="mp">
+    <!--[if lt IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="minnpost-page-container">
+      <div class="spacer"></div>
+
+      <h1>MinnPost Styles</h1>
+
+      <div class="section">
+        <p class="xlarge">Welcome to MinnPost Styles, a super-fly, style guide focused on interactive and news applications made by the <a href="http://code.minnpost.com/">MinnData team</a>.  <em>A work in progress.</em></p>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="about">About <a href="#about" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>MinnPost Styles is a CSS and JS framework.  The CSS source is written in <a href="http://sass-lang.com/">SASS</a> and is extendable if you want to include the framework via SASS.</p>
+
+        <p>Lots of inspiration and some code was taken from such amazing projects such as <a href="http://getbootstrap.com/">Bootstrap</a>, Mapbox.js, and more.  The source code can be found on <a href="https://github.com/MinnPost/minnpost-styles">Github</a>.
+
+        <h3>Browser support</h3>
+
+        <p>MinnPost Styles aims to support all modern browsers and Internet Explorer 8 (IE8).  See the <a href="#browser" target="_self">browser note section</a> for common notes to users that do not run a supported browser.</p>
+
+        <p>IE8 does not support many newer CSS(3) features and so some styles will not be the exact same as other browsers, but the difference should be minor style differences.  IE8 does not support media queries in CSS, so we have to include a library to force it.  <em><strong>Need to figure out.</strong></em></p>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="usage">Usage <a href="#usage" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>It is suggested that you install MinnPost Styles with <a href="http://bower.io/">Bower</a>.  Otherwise, get the code from <a href="https://github.com/minnpost/minnpost-styles">Github</a>.</p>
+
+        <div class="example-code">
+          <pre><code>bower install minnpost-styles </code></pre>
+        </div>
+
+        <h3>CSS</h3>
+
+        <p>Include the CSS as you would for any other library by putting the folling in the <code>head</code> section of your HTML document.</p>
+
+        <div class="example-code">
+          <pre><code>&lt;link rel="stylesheet" href="bower_components/minnpost-styles/dist/minnpost-styles.min.css"&gt; </code></pre>
+        </div>
+
+        <h4>Wrapper class</h4>
+
+        <p>Since these styles were made for projects that will get embedded in existing sites, all styles are prefixed with the <code>mp</code> class.  This means you should wrap your markup like so:</p>
+
+        <div class="example-code">
+          <pre><code>&lt;div class="mp"&gt; ... &lt;/div&gt; </code></pre>
+        </div>
+
+        <p>Or, if you are not embedding, simply add the class to the body:</p>
+
+        <div class="example-code">
+          <pre><code>&lt;body class="mp"&gt; ... &lt;/body&gt; </code></pre>
+        </div>
+
+        <h3>Javascript</h3>
+
+        <p>There are Javascript parts for common interactions and interactive parts.  See sections below that give examples of usage of the different components.  Include the relevant JS files by adding the following near the end of your HTML document:</p>
+
+        <div class="example-code">
+          <pre><code>&lt;script src="bower_components/minnpost-styles/dist/minnpost-styles.nav.min.js"&gt;&lt;/script&gt; </code></pre>
+        </div>
+
+        <h4>Dependencies</h4>
+
+        <p>MinnPost Styles depends on <a href="http://underscorejs.org/">underscore</a> and <a href="http://jquery.com/">jQuery</a> globally, but depending on what part you want to use, you will need to include other dependencies.</p>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>Component</th><th>Dependencies</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr><td>Config</td><td>(default)</td></tr>
+              <tr><td><a href="#datatables" target="_self">Datatables</a></td><td><a href="http://datatables.net/">Datatables</a></td></tr>
+              <tr><td>Formatters</td><td>(default)</td></tr>
+              <tr><td><a href="#highcharts" target="_self">Highcharts</a></td><td><a href="http://www.highcharts.com/">Highcharts</a></td></tr>
+              <tr><td><a href="#maps" target="_self">Maps</a></td><td><a href="http://leafletjs.com/">Leaflet</a></td></tr>
+              <tr><td><a href="#navigation" target="_self">Nav</a></td><td>(default)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Use a module loader</h4>
+
+        <p>The JS parts of MinnPost styles will all go into a global variable by default, for example <code>MP.nav</code>, but it is suggested to use a module loader like <a href="http://requirejs.org/">RequireJS</a> or <a href="http://browserify.org/">Browserify</a>.  The following is a sample usage with RequireJS:</p>
+
+        <div class="example-code">
+          <pre><code>
+require.config({
+  paths: {
+    'underscore': 'bower_components/underscore/underscore-min',
+    'jquery': 'bower_components/jquery/dist/jquery.min',
+    'nav': 'bower_components/minnpost-styles/minnpost-styles.nav.min'
+  }
+});
+
+require(['underscore', 'jquery', 'nav'], function(_, $, nav) {
+  // Nav creates some jQuery plugins
+  $(document).ready(function() {
+    // Scoll spy it all
+    $('body').mpScrollSpy();
+  });
+});
+          </code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="colors">Colors <a href="#colors" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <script id="template-color-swatch" type="text/template">
+          <div class="cf">
+            <% _.each(colors, function(c, ci) { %>
+              <div <% if (typeof titles != 'undefined') { %>title="<%= titles[ci] %>" <% } %>class="color-swatch bg-color-<%= (type) ? type + '-' : '' %><%= ci %>"><%= ci %> <br> <%= c %></div>
+            <% }) %>
+          </div>
+        </script>
+        <script id="template-color-group" type="text/template">
+          <% _.each(colorsets, function(cs, csi) { %>
+            <div class="cf color-group">
+              <% _.each(cs.colors, function(c, ci) { %>
+                <div class="color-swatch color-<%= c.replace('#', '')%>" style="background-color: <%= c %>; color: <%= c %>;"><%= c %></div>
+              <% }) %>
+            </div>
+          <% }) %>
+        </script>
+
+        <h3>Interface</h3>
+
+        <p>These colors are used in the interface and already set to the appropriate components.  Though you should not need to often, you can use these as text or background colors with classes like <code>.color-{color-name}</code> or <code>.bg-color-{color-name}</code>.  After including the <code>minnpost-styles.config.js</code>, the colors are available under <code>MP.config['colors-interface']</code>.</p>
+
+        <div class="interface-colors-placeholder"></div>
+
+        <h3>Political</h3>
+
+        <p>These colors are used for political parties.  You can use these as text or background colors with classes like <code>.color-political-{color-name}</code> or <code>.bg-color-political-{color-name}</code>.  After including the <code>minnpost-styles.config.js</code>, the colors are available under <code>MP.config['colors-political']</code>.  Full names of political parties can be found in <code>MP.config.politicalParties</code> and can be seen if you hover over the swatches below.</p>
+
+        <div class="political-colors-placeholder"></div>
+
+        <h3>Data</h3>
+
+        <p>These colors are used for data visualizations.  These are colors to start from, and the set as whole should not necessarily be used to represent categories or groups in one dataset.</p>
+
+        <div class="data-colors-placeholder"></div>
+
+        <p>You can use these as text or background colors with classes like <code>.color-data-{color-name}</code> or <code>.bg-color-data-{color-name}</code>.  After including the <code>minnpost-styles.config.js</code>, the colors are available under <code>MP.config['colors-data']</code>.</p>
+
+        <h4>Grouping data</h4>
+
+        <p>When grouping data, there are few important things to consider.</p>
+
+        <ul>
+          <li><p><strong>The number of groups</strong>: This is dependent on the data and the story.  More groups mean more information for your reader to parse (both colors and data groups).  It is suggested to break things down to no more than 7 colors.</p></li>
+
+          <li><p><strong>The set of colors</strong>: Choosing colors to represent the different groups is very difficult.  Make sure to read the <a href="http://colorbrewer2.org/learnmore/schemes_full.html">Colorbrewer's scheme documentation</a> and determine if you are representing sequential, diverging, or qualitative data.  From there it best to pick colors that are the most visually distinct; this is more easily achieved by using the the <a href="http://hclcolor.com/">HCL</a> or <a href="http://en.wikipedia.org/wiki/Lab_color_space">Lab</a>.  Try using tools like <a href="http://tools.medialab.sciences-po.fr/iwanthue/index.php">I want hue</a> or <a href="http://tristen.ca/hcl-picker/">this HCL picker</a>.</p></li>
+
+          <li><p><strong>Colorblind consideration</strong>: When picking colors for data visualization, it is very important to ensure that the groups can be distinguished from each other for people with different color blindness.  Use tools like <a href="http://colororacle.org/">Color Oracle</a> to check this.</p></li>
+        </ul>
+
+        <p>The following are sequential examples to white and diverging examples to the opposite ordered hue.  Use the buttons below to switch the color spaces.  Also, the hexadecimal values for the colors are actually in each block and copyable.</p>
+
+        <form role="form" class="form-inline small color-form">
+          <div class="button-group">
+            <button class="button primary active color-example-space" data-color-space="lab">Lab</button>
+            <button class="button primary color-example-space" data-color-space="lch">HCL</button>
+          </div>
+
+          <label for="color-example-count">Number of colors:</label>
+          <select id="color-example-count">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7" selected="true">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select>
+        </form>
+
+        <div class="row space-bottom">
+          <div class="column-medium-50">
+            <div class="component-label">Sequential examples</div>
+
+            <div class="data-colors-groups-sequential-placeholder"></div>
+          </div>
+          <div class="column-medium-50">
+            <div class="component-label">Diverging examples</div>
+
+            <div class="data-colors-groups-diverging-placeholder"></div>
+          </div>
+        </div>
+
+        <p>This is programatically achieved wtih <a href="https://github.com/gka/chroma.js/">Chroma.js</a> and code similar to:</p>
+
+        <pre><code>chroma.scale(['white', '#F55F29']).mode('lab').domain([0,1], 5).colors()</code></pre>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="browser">Browser notes<a href="#browser" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>We aim to support down to IE8, but we still want other browsers to have some direction on how to upgrade, or that though the piece may work, some parts may be missing.</p>
+
+        <h3>Javascript is not enabled</h3>
+
+        <p>Though this is highly unlikely these days and given our audience, it's still important to note if the interface is based heavily on Javascript.</p>
+
+        <div class="example ">
+          <p class="noscript-note">This application requires Javascript which is used to make your web browser more interactive.  If this message does not go away, please consider enabling Javascript.  Here are <a href="http://www.enable-javascript.com/" target="_blank">instructions on how to enable JavaScript in your web browser</a>.</p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;noscript&gt;
+  &lt;p class="noscript-note"&gt;This application requires Javascript which is used to make your web browser more interactive.  If this message does not go away, please consider enabling Javascript.  Here are &lt;a href="http://www.enable-javascript.com/" target="_blank"&gt;instructions on how to enable JavaScript in your web browser&lt;/a&gt;.&lt;/p&gt;
+&lt;/noscript&gt; </code></pre>
+        </div>
+
+        <h3>Browser is not fully supported</h3>
+
+        <p>Depending on what browser is supported, you should change the IE conditional.</p>
+
+        <div class="example ">
+          <div class="browser-upgrade-note">
+            <h4>Consider upgrading your browser</h4>
+            <p>Your <strong>Internet Browser</strong> is the application you use to navigate webpages on the internet.  You are currently using an older version of Internet Explorer.  This application may not be full-featured because you are using such an old browser.</p>
+
+            <p><a href="http://browsehappy.com/" target="_blank">Click here to find out about upgrading to a newer browser</a>.</p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;!--[if lte IE 8]&gt;
+&lt;div class="browser-upgrade-note"&gt;
+  &lt;h4&gt;Consider upgrading your browser&lt;/h4&gt;
+  &lt;p&gt;Your &lt;strong&gt;Internet Browser&lt;/strong&gt; is the application you use to navigate webpages on the internet.  You are currently using an older version of Internet Explorer.  This application may not be full-featured because you are using such an old browser.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href="http://browsehappy.com/" target="_blank"&gt;Click here to find out about upgrading to a newer browsers&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;![endif]--&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="grid">Grid <a href="#grid" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>A really, really basic, mobile-first, fluid grid is provided.  There are 5 provided groups of breakpoints, <code>all</code>, <code>small</code>, <code>medium</code>, <code>large</code>, <code>xlarge</code>, and widths are provided in 5% intervals as well as 33% and 66%.  This makes combinations such as <code>.column-small-50</code>, which means that any width greater than or equal to 420px will be 50% wide.</p>
+
+        <div class="example example-grid">
+
+          <div class="row">
+            <div class="column-medium-25">
+              <p>25% m+</p>
+            </div>
+            <div class="column-medium-25">
+              <p>25% m+</p>
+            </div>
+            <div class="column-medium-50">
+              <p>50% m+</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="column-small-33">
+              <p>33% s+</p>
+            </div>
+            <div class="column-small-66">
+              <p>66% s+</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="column-large-15">
+              <p>15% l+</p>
+            </div>
+            <div class="column-large-10">
+              <p>10% l+</p>
+            </div>
+            <div class="column-large-5">
+              <p>5% l+</p>
+            </div>
+            <div class="column-large-20">
+              <p>20% l+</p>
+            </div>
+            <div class="column-large-20">
+              <p>20% l+</p>
+            </div>
+            <div class="column-large-30">
+              <p>30% l+</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="column-small-33 column-medium-50">
+              <p>33% s+ 50% m+</p>
+            </div>
+            <div class="column-small-66 column-medium-50">
+              <p>66% s+ 50% m+</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="row"&gt;
+  &lt;div class="column-small-33 column-medium-50"&gt;
+    &lt;p&gt;33% s+ 50% m+&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="column-small-66 column-medium-50"&gt;
+    &lt;p&gt;66% s+ 50% m+&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt; </code></pre>
+        </div>
+
+        <h3>Breakpoints</h3>
+
+        <p>Predefined breakpoints are silly.  Breakpoints should be defined when content or style no longer makes sense.  That said, MinnPost Styles provides some defaults that we use often on our projects.</p>
+
+        <p>If you are using SASS, it is very simple to update the breakpoints and the size names.  Simply update the following variable with something similar to the following.  Each sub list consists of the class suffix and breakpoint.</p>
+
+
+        <div class="example-code">
+<pre><code>$responsive-points: (
+  ("all", 0px),
+  ("small", 420px),
+  ("medium", 640px),
+  ("large", 960px),
+  ("xlarge", 1200px)
+) </code></pre>
+        </div>
+
+        <p>Note that <code>0px</code> has a special meaning in that it will not be wrapped in a media query and will apply to all browsers.  This means you could turn off the responsive bits by doing the following:</p>
+
+        <div class="example-code">
+<pre><code>$responsive-points: ( ("all", 0px) );</code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="typography">Typography <a href="#typography" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <h3>Font</h3>
+
+        <p>Our overall guideline is to use <a href="http://www.google.com/fonts/specimen/Montserrat">Montserrat</a> for headings and <a href="https://www.google.com/fonts/specimen/Open+Sans">Open Sans</a> for other typograhy.  Use <code>.font-heading</code> and <code>.font-text</code> to override and set a specific font.</p>
+
+        <h3>Headings</h3>
+
+        <p>The following are the styling of the headings, h1, h2, etc.</p>
+
+        <div class="example">
+          <h1>h1 Example heading</h1>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+          <h2>h2 Example heading</h2>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+          <h3>h3 Example heading</h3>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+          <h4>h4 Example heading</h4>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+          <h5>h5 Example heading</h5>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+          <h6>h6 Example heading</h6>
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable.</p>
+
+        </div>
+        <div class="example-code">
+<pre><code>&lt;h1&gt;h1 Example heading&lt;/h1&gt;
+  ... </code></pre>
+</div>
+
+        <h3>Component labels</h3>
+
+        <p>The following are styling for non-heading labels for components like charts or tables.<p>
+
+        <div class="example">
+          <div class="component-label">Component label</div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="component-label"&gt;Component label&lt;/div&gt; </code></pre>
+        </div>
+
+        <h3>Paragraph</h3>
+
+        <div class="example">
+          <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable nina fearless eat the grass friend his zzz home impressed kitten house loves sneak snuggliest mom cat happy! Waffles, her cat classy happy! Bed here years, whisker awesomeness kitties sucked oh shenanigans yoda friend backyard girlfriend kitty. Belly, knock over the lamp rescuing he persian impressed purses gf's.</p>
+        </div>
+        <div class="example-code">
+          <pre><code>&lt;p&gt;Some text...&lt;/p&gt; </code></pre>
+        </div>
+
+        <h3>Text block</h3>
+
+        <p>For optimal readablity, large blocks of text should not necessarily fill the whole container.  This is using <code>em</code>'s which means the container is based on the font size.</p>
+
+        <div class="example">
+          <div class="text-block">
+            <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable nina fearless eat the grass friend his zzz home impressed kitten house loves sneak snuggliest mom cat happy! Waffles, her cat classy happy! Bed here years, whisker awesomeness kitties sucked oh shenanigans yoda friend backyard girlfriend kitty. Belly, knock over the lamp rescuing he persian impressed purses gf's.</p>
+          </div>
+
+          <div class="text-block large left text-justify">
+            <p>Thinks heart prince cat birdwatching chase the red dot kitty honey shenanigans slept sleepy cat, kitten face little cat her life found fuzzy. Cat kitten sunbathe cat crosseyed cat little kitty photobomb looks curls, happy my she boy. Give me fish cats, cat terrified lived catnip comfortable nina fearless eat the grass friend his zzz home impressed kitten house loves sneak snuggliest mom cat happy! Waffles, her cat classy happy! Bed here years, whisker awesomeness kitties sucked oh shenanigans yoda friend backyard girlfriend kitty. Belly, knock over the lamp rescuing he persian impressed purses gf's.</p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="text-block"&gt;
+  &lt;p&gt; ... &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="text-block large left text-justify"&gt;
+  &lt;p&gt; ... &lt;/p&gt;
+&lt;/div&gt; </code></pre>
+        </div>
+
+        <h3>Links</h3>
+
+        <p>Links are used for inline navigation.  For external links, it is often a good idea to use the <code>target="_blank"</code> attribute as it will open the link in a new tab.</p>
+
+        <div class="example">
+          <p>This is a <a href="#">link</a>.</p>
+        </div>
+        <div class="example-code">
+          <pre><code>&lt;a href="#"&gt;link&lt;/a&gt; </code></pre>
+        </div>
+
+        <h3>Text modifiers</h3>
+
+        <div class="example">
+          <p>
+            <small>This is small text.</small>
+            <strong>This is bold text.</strong>
+            <em>This is emphasizes text.</em>
+          </p>
+
+          <p>Some text
+            <sup>Super script</sup>
+            then some
+            <sub>Sub script</sub>
+          </p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;small&gt;This is small text.&lt;/small&gt;
+&lt;strong&gt;This is bold text.&lt;/strong&gt;
+&lt;em&gt;This is emphasizes text.&lt;/em&gt;
+&lt;sup&gt;Super-script text.&lt;/sup&gt;
+&lt;sub&gt;Subscript text.&lt;/sub&gt; </code></pre>
+        </div>
+
+        <h3>Abbreviations</h3>
+
+        <div class="example">
+          <p>
+            <abbr title="HyperText Markup Language">HTML</abbr> is an abbreviation of HyperText Markup Language.
+          </p>
+        </div>
+        <div class="example-code">
+          <pre><code>&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt; </code></pre>
+        </div>
+
+        <h3>Blockquotes</h3>
+
+        <p>Use a <code>&lt;small&gt;</code> element for the attribution of the quote.</p>
+
+        <div class="example">
+          <blockquote>
+            <p>Someone said something really awesome and important once.</p>
+            <small>Someone famous</small>
+          </blockquote>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;blockquote&gt;
+  &lt;p&gt;Someone said something really awesome and important once.&lt;/p&gt;
+  &lt;small&gt;Someone famous&lt;/small&gt;
+&lt;/blockquote&gt; </code></pre>
+        </div>
+
+        <h3>Lists</h3>
+
+        <div class="example">
+          <ul>
+            <li>unordered list example</li>
+            <li>another thing</li>
+            <li>nested items
+              <ul>
+                <li>nested item 1</li>
+                <li>nested item 2</li>
+              </ul>
+            </li>
+            <li>Another item</li>
+          </ul>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;Unordered list example&lt;/li&gt;
+&lt;/ul&gt; </code></pre>
+        </div>
+
+        <div class="example">
+          <ol>
+            <li>ordered list example</li>
+            <li>another thing</li>
+            <li>nested items
+              <ol>
+                <li>nested item 1</li>
+                <li>nested item 2</li>
+              </ol>
+            </li>
+            <li>Another item</li>
+          </ol>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;ol&gt;
+  &lt;li&gt;Ordered list example&lt;/li&gt;
+&lt;/ol&gt; </code></pre>
+        </div>
+
+        <h3>Code</h3>
+
+        <div class="example">
+          <p>
+            Inline <code>code</code> example.
+          </p>
+        </div>
+        <div class="example-code">
+          <pre><code>&lt;code&gt;code&lt;/code&gt; </code></pre>
+        </div>
+
+        <div class="example">
+          <pre><code>['Code block',
+'example here.']; </code></pre>
+        </div>
+        <div class="example-code">
+          <pre><code>&lt;pre&gt;&lt;code&gt;code&lt;/code&gt;&lt;/pre&gt; </code></pre>
+        </div>
+
+        <h3>Footnote</h3>
+
+        <p>Footnotes are for footnotes, attribution, and other notes that are not needed to be specifically with its related content.</p>
+
+        <div class="example">
+          <div class="footnote">
+            <p>This is a footnote example.</p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="footnote"&gt;
+  &lt;p&gt;This is a footnote example&lt;/p&gt;
+&lt;/div&gt; </code></pre>
+        </div>
+
+        <h3>Credit</h3>
+
+        <p>Credits are specifically for components like images, or charts, most likely within a full article context.</p>
+
+        <div class="example">
+          <p class="credit">This is a credit example.</p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;p class="credit"&gt;This is a credit example&lt;/p&gt; </code></pre>
+        </div>
+
+        <h3>Caption</h3>
+
+        <p>Captions are small, simple bits of information giving a specific component context, such as for an image or chart.</p>
+
+        <div class="example">
+          <p class="caption">This is a caption example.  Happy my she boy. Give me fish cats, cat terrified lived catnip comfortable nina fearless eat the grass friend his zzz home impressed kitten house loves sneak snuggliest mom cat happy! Waffles, her cat classy happy!</p>
+        </div>
+        <div class="example-code">
+  <pre><code>&lt;p class="caption"&gt; This is a caption example &lt;/p&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="tables">Tables <a href="#tables" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Wrap tables in a <code>.table-responsive-*</code> class so that it will become scrollable on smaller devices.  Breakpoint suffixes from <code>$responsive-classes</code> SASS variable and determine the max-width to begin making the table responsive.</p>
+
+        <p>Use a <code>striped</code> or <code>striped-even</code> class on the table to add stripes to every other row.</p>
+
+        <div class="example">
+          <div class="component-label">Table example</div>
+
+          <div class="table-responsive-medium">
+            <table>
+              <thead>
+                <tr>
+                  <th>First column</th><th>second</th><th>third</th><th>fourth</th><th>fifth</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>data</td><td>2</td><td><p>longer paragraph text is over here</p></td><td>42,000,424,242.00</td><td>MORE!</td>
+                </tr>
+                <tr>
+                  <td>somre more data here</td><td>42</td><td><p>longer paragraph text is over here</p></td><td>42,000,424,242.00</td><td>MORE!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="table-responsive-medium"&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;First column&lt;/th&gt;&lt;th&gt;second&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;data&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;somre more data here&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="buttons">Buttons <a href="#buttons" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Different types of buttons.  The <code>&lt;button&gt;</code> is the preferred element to use, but you can use other elements if needed.</p>
+
+        <div class="example">
+          <p>
+            <button class="button">Button</button>
+            <a href="#" class="button">Link</a>
+            <span class="button">Span</span>
+            <button class="button button-link">Button link</button>
+            <button class="button disabled">Disabled</button>
+            <button class="button active">Active</button>
+          </p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;button class="button"&gt;Button&lt;/button&gt;
+&lt;a href="#" class="button"&gt;Link&lt;/a&gt;
+&lt;span class="button"&gt;Span&lt;/span&gt;
+&lt;button class="button button-link"&gt;Button link&lt;/button&gt;
+&lt;button class="button disabled"&gt;Disabled&lt;/button&gt;
+&lt;button class="button active"&gt;Active&lt;/button&gt; </code></pre>
+        </div>
+
+        <p>There are different types of buttons with different colors as well.</p>
+
+        <div class="example">
+          <p>
+            <button class="button primary">Primary</button>
+            <button class="button success">Success</button>
+            <button class="button info">Info</button>
+            <button class="button warning">Warning</button>
+            <button class="button danger">Danger</button>
+          </p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;button class="button primary"&gt;primary&lt;/button&gt;
+&lt;button class="button success"&gt;success&lt;/button&gt;
+&lt;button class="button info"&gt;info&lt;/button&gt;
+&lt;button class="button warning"&gt;warning&lt;/button&gt;
+&lt;button class="button danger"&gt;danger&lt;/button&gt;</code></pre>
+        </div>
+
+        <p>You can use the helper classes to make different sized buttons as well.</p>
+
+        <div class="example">
+          <p>
+            <button class="button xxsmall">xxSmall</button>
+            <button class="button xsmall">xSmall</button>
+            <button class="button small">Small</button>
+            <button class="button large">Large</button>
+            <button class="button xlarge">xLarge</button>
+            <button class="button xxlarge">xxLarge</button>
+          </p>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;button class="button xxsmall"&gt;xxSmall&lt;/button&gt;
+&lt;button class="button xsmall"&gt;xsmall&lt;/button&gt;
+&lt;button class="button small"&gt;small&lt;/button&gt;
+&lt;button class="button large"&gt;large&lt;/button&gt;
+&lt;button class="button xlarge"&gt;xlarge&lt;/button&gt;
+&lt;button class="button xxlarge"&gt;xxlarge&lt;/button&gt; </code></pre>
+        </div>
+
+        <h3>Button groups</h3>
+
+        <p>Buttons next to each other.</p>
+
+        <div class="example">
+          <div class="button-group">
+            <button class="button">Button</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+          </div>
+        </div>
+        <div class="example-code">
+  <pre><code> </code></pre>
+        </div>
+
+        <h3>Button toolbar</h3>
+
+        <p>Buttons groups next to each other in a toolbar.</p>
+
+        <div class="example">
+          <div class="button-toolbar">
+            <div class="button-group">
+              <button class="button">Button</button>
+              <button class="button">2</button>
+              <button class="button">3</button>
+            </div>
+
+            <div class="button-group">
+              <button class="button primary">Primary</button>
+              <button class="button info">Info 1</button>
+              <button class="button info">Info 2</button>
+            </div>
+          </div>
+        </div>
+        <div class="example-code">
+  <pre><code> </code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="forms">Forms <a href="#forms" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <h3>Regular form</h3>
+
+        <p>The following is a basic input form.</p>
+
+        <div class="example">
+          <form role="form">
+            <div class="form-item">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" id="exampleInputEmail1" placeholder="Enter email">
+            </div>
+
+            <div class="form-item">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" id="exampleInputPassword1" placeholder="Password">
+              <p class="form-help">Example block-level help text here.</p>
+            </div>
+
+            <div class="form-item">
+              <label for="exampleInputFile">File input</label>
+              <input type="file" id="exampleInputFile">
+              <p class="form-help">Example block-level help text here.</p>
+            </div>
+
+            <div class="form-item">
+              <label>Checkboxes</label>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="checkboxes" value="2"> Check, check
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="checkboxes" value="2"> Check me out
+                </label>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label>Radios</label>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> Option 1
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked> Option 2
+                </label>
+              </div>
+            </div>
+
+            <fieldset>
+              <legend>Field group with legend</legend>
+
+              <div class="form-item">
+                <label for="example03">Lots of text</label>
+                <textarea type="text" id="example03" placeholder="Enter something"></textarea>
+              </div>
+            </fieldset>
+
+            <button type="submit" class="button primary">Submit</button>
+          </form>
+
+        </div>
+        <div class="example-code">
+<pre><code>&lt;form role="form"&gt;
+  &lt;div class="form-item"&gt;
+    &lt;label for="exampleInputEmail1"&gt;Email address&lt;/label&gt;
+    &lt;input type="email" id="exampleInputEmail1" placeholder="Enter email"&gt;
+  &lt;/div&gt;
+
+  ...
+
+  &lt;div class="checkbox"&gt;
+    &lt;label&gt;
+      &lt;input type="checkbox" name="checkboxes" value="2"&gt; Check, check
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" class="button primary"&gt;Submit&lt;/button&gt;
+&lt;/form&gt; </code></pre>
+        </div>
+
+        <h3>Inline form</h3>
+
+        <p>The following is a basic inline form.  Inline forms are for multiple, but few inputs.</p>
+
+        <div class="example">
+          <form role="form" class="form-inline">
+            <div class="form-item">
+              <label for="example51" class="sr-only">Email address</label>
+              <input type="email" id="example51" placeholder="Email">
+            </div>
+
+            <div class="form-item">
+              <label for="example52" class="sr-only">Password</label>
+              <input type="password" id="example52" placeholder="Password">
+            </div>
+
+            <button type="submit" class="button primary">Submit</button>
+          </form>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;form role="form" class="form-inline"&gt;
+  ...
+&lt;/form&gt; </code></pre>
+        </div>
+
+        <h3>Input group</h3>
+
+        <p>For single input forms, use an input group.</p>
+
+        <p><em><strong>Currently broke in IE8.</strong></em></p>
+
+        <div class="example">
+          <form role="form" class="large">
+            <div class="form-input-group">
+              <label for="address" class="sr-only">Email address</label>
+              <input type="text" id="address" placeholder="Search by address">
+
+              <div class="button-group">
+                <button type="submit" class="button primary" title="Search an address">Search</button>
+                <button type="submit" class="button info" title="Use your current location"><i class="fa fa-location-arrow"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;form role="form" class="large"&gt;
+  &lt;div class="form-input-group"&gt;
+    &lt;label for="address" class="sr-only"&gt;Email address&lt;/label&gt;
+    &lt;input type="text" id="address" placeholder="Search by address"&gt;
+
+    &lt;div class="button-group"&gt;
+      &lt;button type="submit" class="button primary" title="Search an address"&gt;Search&lt;/button&gt;
+      &lt;button type="submit" class="button info" title="Use your current location"&gt;&lt;i class="fa fa-location-arrow"&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/form&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+      <div class="section">
+        <h2 id="media">Media <a href="#media" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <h3>Images</h3>
+
+        <p>Make sure to use the <code>alt</code> attribute to provide a descriptive version of the image.  <em>Note that IE8 does not support rounded corners</em>.</p>
+
+        <div class="example">
+          <img src="" data-src="holder.js/150x150" alt="Grey placeholder" class="rounded">
+          <img src="" data-src="holder.js/150x150" alt="Grey placeholder" class="circle">
+
+          <img src="http://placekitten.com/150/150" alt="Kitten placeholder" class="rounded">
+          <img src="http://placekitten.com/150/150" alt="Kitten placeholder" class="circle">
+        </div>
+        <div class="example-code">
+  <pre><code> </code></pre>
+        </div>
+
+        <h3>Thumbnails</h3>
+
+        <div class="example">
+          <a href="#" class="thumbnail thumbnail-inline">
+            <img src="" data-src="holder.js/100x100" alt="Grey placeholder">
+          </a>
+
+          <a href="#" class="thumbnail thumbnail-inline">
+            <img src="" data-src="holder.js/100x100" alt="Grey placeholder">
+          </a>
+
+          <div class="thumbnail">
+            <img src="" data-src="holder.js/100x100" alt="Grey placeholder">
+
+            <div class="caption">
+              <p>This is a caption</p>
+            </div>
+          </div>
+        </div>
+        <div class="example-code">
+  <pre><code> </code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="icons">Icons <a href="#icons" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Icons provided by <a href="http://fontawesome.io/">Font Awesome</a>; see the site for the full list of icons.  Kept independent so that MinnPost Styles stays small if you don't need them.  Use the Bootstrap CDN to include the CSS.</p>
+
+        <pre><code>&lt;link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"&gt; </code></pre>
+
+        <div class="example">
+          <i class="fa fa-compass"></i>
+          <i class="fa fa-compass fa-spin"></i>
+          <i class="fa fa-compass fa-flip-horizontal"></i>
+          <i class="fa fa-compass xlarge"></i>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;i class="fa fa-compass"&gt;&lt;/i&gt;
+&lt;i class="fa fa-compass fa-spin"&gt;&lt;/i&gt;
+&lt;i class="fa fa-compass fa-flip-horizontal"&gt;&lt;/i&gt;
+&lt;i class="fa fa-compass xlarge"&gt;&lt;/i&gt; </code></pre>
+        </div>
+
+        <h3>Loading</h3>
+
+        <p>Often, there is a need to represent that processing or data loading is happening, use the following to provide that message.  <em>Note that IE8 and IE9 does not support CSS animations so the icon will not spin</em>.</p>
+
+        <div class="example">
+          <div class="loading-container">
+            <i class="loading"></i> Loading...
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="loading-container"&gt;
+  &lt;i class="loading"&gt;&lt;/i&gt; Loading...
+&lt;/div&gt; </code></pre>
+        </div>
+
+        <p>For quick loading of a specific element, you can use the <code>loading-block</code> class for a simple representation of loading.</p>
+
+        <div class="example">
+          <div class="loading-block"></div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="loading-block"&gt;&lt;/div&gt; </code></pre>
+        </div>
+
+        <h3>Preferred icons</h3>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr><th>Name</th><th>Class</th><th>Icon</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Location</td><td><code>fa-location-arrow</code></td><td><i class="fa fa-location-arrow fa-lg"></i></td></tr>
+              <tr><td>External link</td><td><code>fa-external-link</code></td><td><i class="fa fa-external-link fa-lg"></i></td></tr>
+              <tr><td>Down expand</td><td><code>fa-angle-down</code></td><td><i class="fa fa-angle-down fa-lg"></i></td></tr>
+              <tr><td>Up minimize</td><td><code>fa-angle-up</code></td><td><i class="fa fa-angle-up fa-lg"></i></td></tr>
+              <tr><td>Forward or next</td><td><code>fa-long-arrow-right</code></td><td><i class="fa fa-long-arrow-right fa-lg"></i></td></tr>
+              <tr><td>Back or previous</td><td><code>fa-long-arrow-left</code></td><td><i class="fa fa-long-arrow-left fa-lg"></i></td></tr>
+              <tr><td>Check</td><td><code>fa-check</code></td><td><i class="fa fa-check fa-lg"></i></td></tr>
+              <tr><td>Alert</td><td><code>fa-bell</code></td><td><i class="fa fa-bell fa-lg"></i></td></tr>
+              <tr><td>Permalink</td><td><code>??</code></td><td><i class="fa fa-unknown"></i></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="labels">Labels <a href="#labels" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Labels are basic ways to make distinctions to key words.</p>
+
+        <div class="example">
+          <p>
+            <span class="label">label</span>
+          </p>
+
+          <p>
+            <span class="label large-2x">2x</span>
+          </p>
+        </div>
+        <div class="example-code">
+  <pre><code>&lt;span class="label"&gt;label&lt;/span&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="alerts">Alerts <a href="#alerts" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Messages to the users, specifically concerning actions they have taken.</p>
+
+        <div class="example">
+          <div class="alert success">
+            <strong>Success!</strong> This is a warning; watch out.
+          </div>
+
+          <div class="alert info">
+            <strong>Info!</strong> This is a warning; watch out.
+          </div>
+
+          <div class="alert warning">
+            <strong>Warning!</strong> This is a warning; watch out.
+          </div>
+
+          <div class="alert danger">
+            <strong>Danger!</strong> This is a warning; watch out.
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="alert success"&gt;
+  &lt;strong&gt;Success!&lt;/strong&gt; This is a warning; watch out.
+&lt;/div&gt;
+
+&lt;div class="alert info"&gt;
+  &lt;strong&gt;Info!&lt;/strong&gt; This is a warning; watch out.
+&lt;/div&gt;
+
+&lt;div class="alert warning"&gt;
+  &lt;strong&gt;Warning!&lt;/strong&gt; This is a warning; watch out.
+&lt;/div&gt;
+
+&lt;div class="alert danger"&gt;
+  &lt;strong&gt;Danger!&lt;/strong&gt; This is a warning; watch out.
+&lt;/div&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="progress">Progress bars <a href="#progress" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Either for interactive loading or a simple data visualization.  This is a starting point for specific needs.</p>
+
+        <div class="example">
+
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="progress"&gt;
+  &lt;div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"&gt;
+    &lt;span class="sr-only"&gt;60% Complete&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt; </code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="helpers">Helpers <a href="#helpers" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>The following helper classes have a SASS @mixin counter part that you can use in your SASS files.</p>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr><th>Class (or mixin)</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>inline-block</code></td><td>Cross-browser inline-block.</td></tr>
+              <tr><td><code>clearfix</code> or <code>cf</code></td><td>Cross-browser clearfix hack.</td></tr>
+              <tr><td><code>tab-focus</code></td><td>Provides a consistent WebKit-style focus.</td></tr>
+              <tr><td><code>center-block</code></td><td>Makes a block that is center and should be given a width.</td></tr>
+              <tr><td><code>text-overflow</code></td><td>Cuts content off and adds ellipses.  Requires inline-block or block for proper styling.</td></tr>
+              <tr><td><code>text-hide</code></td><td>Hides text, but still read by screen reader.</td></tr>
+              <tr><td><code>screen-reader-only</code> or <code>sr-only</code></td><td>Screen reader only.</td></tr>
+              <tr><td><code>hidden</code> or <code>hide</code></td><td>Hidden from view and screen readers.</td></tr>
+              <tr><td><code>print-visible</code></td><td>Visible on print only.</td></tr>
+              <tr><td><code>print-hidden</code></td><td>Not visible on print.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The following are simply helpful classes (no SASS counter parts).</p>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr><th>Class</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>xsmall</code>, <code>small</code>, <code>large</code>, <code>xlarge</code>, <code>xxlarge</code>, or <code>xxxlarge</code></td><td>Ups the font size, and given that almost all measurements are in em's then it will also increase the overall spacing.</td></tr>
+              <tr><td><code>float-right</code></td><td>Float right.</td></tr>
+              <tr><td><code>float-left</code></td><td>Float left.</td></tr>
+              <tr><td><code>show</code></td><td>Does a display block.</td></tr>
+              <tr><td><code>show-inline</code></td><td>Does a display inline.</td></tr>
+              <tr><td><code>invisible</code></td><td>Does a visibility hidden.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="navigation">Navigation <a href="#navigation" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Overall, data or interactive pieces should guide people through the story or visuals, but sometimes you just need some simple navigation to allow readers to explore.</p>
+
+        <h3>Horizontal navigation</h3>
+
+        <div class="example">
+          <div>
+            <div class="navigation horizontal example-nav">
+              <ul>
+                <li><a href="#" class="active">Sec 1</a></li>
+                <li><a href="#">Sec 2</a></li>
+                <li><a href="#">Sec 3</a></li>
+                <li><a href="#">Sec 4</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="navigation horizontal"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#" class="active"&gt;Sec 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Sec 2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Sec 3&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Sec 4&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <h3>Sticky horizontal navigation</h3>
+
+        <p>The following is an example of horizontal navigation that remains stuck at the top of the window when scrolling past it, but this only happens within a parent container.  Also, this is an example of the simple "scoll-spying" mechanism that automatically activates the navigation link if that section is in view.</p>
+
+        <div class="example">
+          <div>
+            <div class="navigation horizontal example-stick-top">
+              <ul>
+                <li><a href="#" class="active" data-spy-on="section01">Sec 1</a></li>
+                <li><a href="#" data-spy-on="section02">Sec 2</a></li>
+                <li><a href="#" data-spy-on="section03">Sec 3</a></li>
+                <li><a href="#" data-spy-on="section04">Sec 4</a></li>
+              </ul>
+            </div>
+
+            <h4 data-spy-me="section01">Section 01</h4>
+
+            <p>Kitty ipsum dolor sit amet, consectetur purr pharetra iaculis tail flick tail flick, adipiscing tortor rutrum lick suscipit catnip. Iaculis I don't like that food tortor shed everywhere tristique, hairball I don't like that food fluffy fur dolor tempus puking nunc. Accumsan stretching libero neque chase the red dot, faucibus sniff stretching libero vulputate chase the red dot. Suspendisse stuck in a tree suspendisse shed everywhere tail flick suspendisse, sollicitudin etiam rip the couch shed everywhere eat the grass orci turpis. Vestibulum tempus accumsan claw rip the couch, egestas rutrum dolor nam scratched. Give me fish bat tortor tincidunt a meow suspendisse, claw justo kittens shed everywhere. Vehicula sagittis quis nunc vel sleep in the sink, eat the grass feed me feed me toss the mousie elit orci turpis.</p>
+
+            <h4 data-spy-me="section02">Section 02</h4>
+
+            <p>Vestibulum litter box climb the curtains attack, nam suscipit enim ut jump on the table amet libero sleep on your keyboard. Climb the curtains meow quis vehicula consectetur, accumsan knock over the lamp lick etiam jump tempus. Sleep on your keyboard shed everywhere neque lay down in your way run, feed me suspendisse libero quis nunc quis attack your ankles climb the curtains. Dolor attack aliquam attack, chase the red dot catnip cras nec sunbathe sleep in the sink chase the red dot et. Tempus nullam chase the red dot pharetra aliquam, eat catnip sleep on your face amet claw. Sollicitudin nullam hairball neque sleep in the sink, pellentesque orci turpis adipiscing vel hairball. Sniff tail flick et tempus, iaculis stuck in a tree knock over the lamp rip the couch stretching dolor attack.</p>
+
+            <h4 data-spy-me="section03">Section 03</h4>
+
+            <p>Cras nec pharetra purr enim ut justo run, hairball nam elit neque. Ac sleep in the sink I don't like that food iaculis, sniff egestas sleep on your face nam sagittis biting hairball. Lick biting run iaculis et, nunc tail flick etiam vulputate tincidunt a biting. Chase the red dot non toss the mousie orci turpis, claw amet leap neque adipiscing et. Judging you catnip scratched etiam tincidunt a, fluffy fur fluffy fur vel iaculis I don't like that food ac justo. Eat the grass biting vehicula enim nam nam, kittens attack your ankles sunbathe sagittis judging you libero. Mauris a rip the couch pharetra adipiscing shed everywhere pellentesque, chuf enim ut tincidunt a vehicula nullam give me fish.</p>
+
+            <h4 data-spy-me="section04">Section 04</h4>
+
+            <p>Cras nec pharetra purr enim ut justo run, hairball nam elit neque. Ac sleep in the sink I don't like that food iaculis, sniff egestas sleep on your face nam sagittis biting hairball. Lick biting run iaculis et, nunc tail flick etiam vulputate tincidunt a biting. Chase the red dot non toss the mousie orci turpis, claw amet leap neque adipiscing et. Judging you catnip scratched etiam tincidunt a, fluffy fur fluffy fur vel iaculis I don't like that food ac justo. Eat the grass biting vehicula enim nam nam, kittens attack your ankles sunbathe sagittis judging you libero. Mauris a rip the couch pharetra adipiscing shed everywhere pellentesque, chuf enim ut tincidunt a vehicula nullam give me fish.</p>
+
+            <p>Vestibulum litter box climb the curtains attack, nam suscipit enim ut jump on the table amet libero sleep on your keyboard. Climb the curtains meow quis vehicula consectetur, accumsan knock over the lamp lick etiam jump tempus. Sleep on your keyboard shed everywhere neque lay down in your way run, feed me suspendisse libero quis nunc quis attack your ankles climb the curtains. Dolor attack aliquam attack, chase the red dot catnip cras nec sunbathe sleep in the sink chase the red dot et. Tempus nullam chase the red dot pharetra aliquam, eat catnip sleep on your face amet claw. Sollicitudin nullam hairball neque sleep in the sink, pellentesque orci turpis adipiscing vel hairball. Sniff tail flick et tempus, iaculis stuck in a tree knock over the lamp rip the couch stretching dolor attack.</p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div&gt;
+  &lt;div class="navigation horizontal example-stick-top"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#" class="active" data-spy-on="section01"&gt;Sec 1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#" data-spy-on="section02"&gt;Sec 2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#" data-spy-on="section03"&gt;Sec 3&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#" data-spy-on="section04"&gt;Sec 4&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;h4 data-spy-me="section01"&gt;Section 01&lt;/h4&gt;
+
+  &lt;p&gt;Kitty ipsum dolor s ... &lt;/p&gt;
+
+  ...
+&lt;/div&gt;
+
+&lt;script&gt;
+// Scroll spy will look for elements that have matching attibutes
+$('body').mpScrollSpy();
+
+// mpStick will use sensible defaults
+$('.example-stick-top').mpStick();
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3>Sticky vertical navigation</h3>
+
+        <p>Navigation is actually vertical by default.  This examples shows the use options in <code>mpStick()</code>.</p>
+
+        <p><em><strong>Note that on screens smaller than "medium", this does not work well, but should just need some responsive styling to make work fine.</strong></em></p>
+
+        <div class="example">
+          <div class="row">
+            <div class="column-medium-33">
+              <div class="example-stick-container">
+                <div class="navigation">
+                  <ul>
+                    <li><a href="#" class="active" data-spy-on="section01b">Sec 1</a></li>
+                    <li><a href="#" data-spy-on="section02b">Sec 2</a></li>
+                    <li><a href="#" data-spy-on="section03b">Sec 3</a></li>
+                    <li><a href="#" data-spy-on="section04b">Sec 4</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="column-medium-66">
+
+              <h4 data-spy-me="section01b">Section 01</h4>
+
+              <p>Kitty ipsum dolor sit amet, consectetur purr pharetra iaculis tail flick tail flick, adipiscing tortor rutrum lick suscipit catnip. Iaculis I don't like that food tortor shed everywhere tristique, hairball I don't like that food fluffy fur dolor tempus puking nunc. Accumsan stretching libero neque chase the red dot, faucibus sniff stretching libero vulputate chase the red dot. Suspendisse stuck in a tree suspendisse shed everywhere tail flick suspendisse, sollicitudin etiam rip the couch shed everywhere eat the grass orci turpis. Vestibulum tempus accumsan claw rip the couch, egestas rutrum dolor nam scratched. Give me fish bat tortor tincidunt a meow suspendisse, claw justo kittens shed everywhere. Vehicula sagittis quis nunc vel sleep in the sink, eat the grass feed me feed me toss the mousie elit orci turpis.</p>
+
+              <p>Vestibulum litter box climb the curtains attack, nam suscipit enim ut jump on the table amet libero sleep on your keyboard. Climb the curtains meow quis vehicula consectetur, accumsan knock over the lamp lick etiam jump tempus. Sleep on your keyboard shed everywhere neque lay down in your way run, feed me suspendisse libero quis nunc quis attack your ankles climb the curtains. Dolor attack aliquam attack, chase the red dot catnip cras nec sunbathe sleep in the sink chase the red dot et. Tempus nullam chase the red dot pharetra aliquam, eat catnip sleep on your face amet claw. Sollicitudin nullam hairball neque sleep in the sink, pellentesque orci turpis adipiscing vel hairball. Sniff tail flick et tempus, iaculis stuck in a tree knock over the lamp rip the couch stretching dolor attack.</p>
+
+              <p>Cras nec pharetra purr enim ut justo run, hairball nam elit neque. Ac sleep in the sink I don't like that food iaculis, sniff egestas sleep on your face nam sagittis biting hairball. Lick biting run iaculis et, nunc tail flick etiam vulputate tincidunt a biting. Chase the red dot non toss the mousie orci turpis, claw amet leap neque adipiscing et. Judging you catnip scratched etiam tincidunt a, fluffy fur fluffy fur vel iaculis I don't like that food ac justo. Eat the grass biting vehicula enim nam nam, kittens attack your ankles sunbathe sagittis judging you libero. Mauris a rip the couch pharetra adipiscing shed everywhere pellentesque, chuf enim ut tincidunt a vehicula nullam give me fish.</p>
+
+              <h4 data-spy-me="section02b">Section 02</h4>
+
+              <p>Nunc hairball hairball adipiscing ac, I don't like that food rhoncus quis nunc justo I don't like that food. Tail flick biting rip the couch jump on the table, sleep in the sink libero feed me eat the grass neque chase the red dot. Rhoncus rutrum climb the curtains faucibus sleep on your keyboard, scratched orci turpis hairball sollicitudin run run non. In viverra suspendisse rip the couch sagittis, claw tincidunt a vulputate chuf judging you climb the curtains. Tristique sleep in the sink quis hiss, catnip nibh tail flick sagittis leap nam scratched. Lick tincidunt a in viverra suscipit litter box, iaculis sagittis sleep on your keyboard egestas stretching. Chuf enim ut aliquam et nunc, vehicula jump on the table eat chuf scratched. Eat leap knock over the lamp iaculis stretching sleep on your keyboard, give me fish iaculis rhoncus suspendisse sollicitudin.</p>
+
+              <p>Tristique rutrum scratched vehicula, shed everywhere nibh tincidunt a climb the curtains orci turpis amet rutrum. Faucibus shed everywhere enim quis sleep on your face, shed everywhere sagittis lay down in your way et nibh. Accumsan biting faucibus sagittis, justo sunbathe tortor sleep in the sink bibendum stretching. Sagittis sniff meow vel amet cras nec, sollicitudin enim sleep in the sink rip the couch rhoncus suspendisse. Pellentesque bibendum iaculis feed me I don't like that food biting, scratched enim ut lay down in your way iaculis etiam. Sniff pellentesque toss the mousie scratched iaculis quis, hairball rip the couch faucibus toss the mousie nibh eat the grass. Jump on the table toss the mousie judging you feed me, climb the curtains iaculis non cras nec catnip ac chase the red dot. Fluffy fur nullam hairball sniff feed me, sagittis iaculis tail flick quis nunc elit justo sniff.</p>
+
+              <p>Zzz justo nullam jump bat adipiscing, rutrum tortor in viverra attack. Accumsan sunbathe judging you elit vehicula enim ut, eat the grass quis nunc fluffy fur sleep in the sink sagittis adipiscing. Sleep in the sink purr jump faucibus nam, et judging you shed everywhere consectetur tortor. Suscipit iaculis rutrum enim ut judging you chuf, climb the curtains I don't like that food judging you vel sleep in the sink enim ut. Non tortor sagittis rhoncus, litter box rhoncus tail flick elit nullam enim suspendisse jump on the table. Chuf attack your ankles sollicitudin sagittis, bat attack sagittis pharetra quis nunc adipiscing tristique attack. Lick fluffy fur nam nullam attack your ankles, vestibulum pharetra in viverra attack stuck in a tree. Chuf hairball dolor tristique, chuf rhoncus biting rip the couch tristique stuck in a tree.</p>
+
+              <p>Eat the grass climb the curtains rhoncus nam, amet neque tincidunt a vehicula hairball stuck in a tree. Climb the curtains lick enim ut non quis, libero jump litter box feed me jump. Chase the red dot lick sollicitudin etiam, sleep on your keyboard jump rip the couch elit vel vel. Enim etiam rutrum neque, faucibus rhoncus sniff zzz vel egestas iaculis. Attack your ankles jump on the table sleep on your keyboard knock over the lamp pellentesque, mauris a mauris a lick tortor lick jump on the table purr. Iaculis nullam stuck in a tree dolor etiam biting, aliquam amet et nam enim libero. Rhoncus leap egestas kittens ac, kittens nibh vestibulum sunbathe egestas attack.</p>
+
+              <h4 data-spy-me="section03b">Section 03</h4>
+
+              <p>Lick ac attack your ankles jump on the table rutrum nunc, pharetra zzz quis vehicula fluffy fur sniff. Leap iaculis orci turpis nullam eat the grass rip the couch, nunc neque sagittis sleep in the sink. Tail flick consectetur iaculis tempus bibendum adipiscing, etiam faucibus lick biting I don't like that food. Tail flick lick claw zzz vehicula quis, sunbathe hiss tincidunt a eat faucibus zzz. Sleep in the sink sleep in the sink sollicitudin sleep in the sink non, sleep in the sink catnip judging you vel toss the mousie. Enim orci turpis sleep in the sink biting purr neque, pellentesque rip the couch biting orci turpis kittens tempus.</p>
+
+              <p>Puking purr non rip the couch nibh, consectetur sniff suscipit chase the red dot enim ut jump. Feed me eat vehicula suspendisse nam attack your ankles, nibh attack your ankles faucibus dolor. Etiam elit suspendisse adipiscing chase the red dot tail flick, catnip elit stuck in a tree run quis nunc. Sagittis sniff sunbathe jump on the table, chuf climb the curtains ac run sniff sleep on your face iaculis. Lick enim ut tortor iaculis, nibh eat the grass puking egestas suspendisse pharetra neque nullam. Feed me jump on the table litter box puking, vel adipiscing chuf sleep on your keyboard libero sleep in the sink. Elit chuf attack scratched give me fish, tristique tristique neque hiss sniff. Judging you enim nam attack your ankles, suspendisse vestibulum sleep in the sink ac adipiscing jump biting.</p>
+
+              <h4 data-spy-me="section04b">Section 04</h4>
+
+              <p>Iaculis rhoncus puking nunc fluffy fur meow, stretching lick bat puking vestibulum vestibulum. Nunc suspendisse rip the couch bat judging you, feed me scratched climb the curtains eat sleep on your face. Libero vel vulputate aliquam, sniff bat hiss enim non suspendisse in viverra. Sagittis chase the red dot fluffy fur nullam egestas justo, suspendisse I don't like that food lick feed me give me fish etiam. Enim vestibulum jump leap orci turpis feed me, enim jump enim ut tristique puking. Attack your ankles enim ut chuf jump on the table lick tempus, eat tortor aliquam toss the mousie. Quis nunc iaculis enim ut vel, tincidunt a egestas feed me cras nec stretching faucibus.</p>
+            </div>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>&lt;div class="row"&gt;
+  &lt;div class="column-medium-33"&gt;
+    &lt;div class="example-stick-container"&gt;
+      &lt;div class="navigation"&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href="#" class="active" data-spy-on="section01b"&gt;Sec 1&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="#" data-spy-on="section02b"&gt;Sec 2&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="#" data-spy-on="section03b"&gt;Sec 3&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="#" data-spy-on="section04b"&gt;Sec 4&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="column-medium-66"&gt;
+
+    &lt;h4 data-spy-me="section01b"&gt;Section 01&lt;/h4&gt;
+
+    &lt;p&gt;Kitt .... &lt;/p&gt;
+
+    ...
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// Scroll spy will look for elements that have matching attibutes
+$('body').mpScrollSpy();
+
+// mpStick with custom options
+$('.example-stick-container').mpStick({
+  activeClass: 'stuck container',
+  wrapperClass: '',
+  container: $('.example-stick-container').parent().parent(),
+  topPadding: 20,
+  throttle: 100
+});
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="highcharts">Highcharts <a href="#highcharts" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Default styling is provided for some basic types of Highchart charts.  All charts use the class <code>chart</code> to standardize the size.  Use the <code>MP.highcharts.makeChart(selector, options)</code> function to easily make charts and get back the Highcharts object to manipulate later if needed.</p>
+
+        <h3>Line chart</h3>
+
+        <div class="example">
+          <div class="component-label">Example line chart</div>
+          <div class="caption">Your awesome, concise caption goes here.  If you can adequately describe your x-axis units and labels, leave them and the legend off.</div>
+          <div class="chart chart-line-example"></div>
+        </div>
+        <div class="example-code">
+<pre><code>
+&lt;div class="component-label"&gt;Example line chart&lt;/div&gt;
+&lt;div class="caption"&gt;Your awesome, concise caption goes here.  If you can adequately describe your x-axis units and labels, leave them and the legend off.&lt;/div&gt;
+&lt;div class="chart chart-line-example">&lt;/div&gt;
+
+// Use the default options, turn off the legend, add some data
+MP.highcharts.makeChart('.chart-line-example', $.extend(true, {}, MP.highcharts.lineOptions, {
+  legend: { enabled: false },
+  yAxis: {
+    title: { enabled: false },
+    labels: { format: '${value:,.0f}' }
+  },
+  series: [{
+    name: 'Example data',
+    data: [1, 2, 3]
+  }]
+})); </code></pre>
+        </div>
+
+        <h3>Column chart</h3>
+
+        <div class="example">
+          <div class="component-label">Example column chart</div>
+          <div class="caption">Your awesome, concise caption goes here.</div>
+          <div class="chart chart-column-example"></div>
+        </div>
+        <div class="example-code">
+<pre><code>// Use the default options, turn off legend, and add some data
+MP.highcharts.makeChart('.chart-line-example', $.extend(true, {}, MP.highcharts.columnOptions, {
+  legend: { enabled: false },
+  series: [{
+    name: 'Example data',
+    data: [1, 2, 3]
+  }]
+})); </code></pre>
+        </div>
+
+        <h3>Bar chart</h3>
+
+        <div class="example">
+          <div class="chart chart-bar-example"></div>
+        </div>
+        <div class="example-code">
+<pre><code>// This examples uses categorical data
+MP.highcharts.makeChart('.chart-bar-example', $.extend(true, {}, MP.highcharts.barOptions, {
+  xAxis: {
+    categories: ['A', 'B', 'C', 'D']
+  },
+  series: [{
+    name: 'Example',
+    data: [24826, 12144, 27342, 24401]
+  },
+  {
+    name: 'Example 2',
+    data: [640, 765, 999, 123]
+  }]
+}));</code></pre>
+        </div>
+
+        <h3>Scatterplot</h3>
+
+        <div class="example">
+          <div class="chart chart-scatter-example"></div>
+        </div>
+        <div class="example-code">
+<pre><code>
+MP.highcharts.makeChart('.chart-scatter-example', $.extend(true, {}, MP.highcharts.scatterOptions, {
+  series: [{
+    name: 'Example',
+    data: [[11, 23], [12, 22], [13, 28], [14, 30], [14.01, 30], [15, 30], [16, 33],
+      [11.2, 22], [12.7, 21], [13.2, 27], [14.1, 34], [15.8, 33], [16.3, 30]]
+  },
+  {
+    name: 'Example 2',
+    data: [[11, 13], [12, 10], [13, 9], [14, 6], [15, 8], [16, 7]]
+  }]
+}));</code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="maps">Maps <a href="#maps" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>Styling for maps provided through Leaflet or Mapbox.js.  Note that Mapbox.js is a superset of Leaflet.  We use the Mapbox.js styling because it is a nice style and provides consistency across maps that may or may not use the Mapbox.js styles.  Include the CSS before MinnPost styles.</p>
+
+        <pre><code>&lt;link rel="stylesheet" href="//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css"&gt; </code></pre>
+
+        <h3>Javascript</h3>
+
+        <p>The following are available in the <code>MP.maps</code> object.</p>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>Property or function</th><th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr><td><code>minneapolisPoint</code></td><td>Leaflet point object for center of Minneapolis.</td></tr>
+              <tr><td><code>stPaulPoint</code></td><td>Leaflet point object for center of St. Paul.</td></tr>
+              <tr><td><code>minnesotaPoint</code></td><td>Leaflet point object for center of Minnesota.</td></tr>
+              <tr><td><code>mapboxSatelliteStreets</code></td><td>Mapbox ID for base layer of satellite with streets.</td></tr>
+              <tr><td><code>mapboxStreetsDarkLabels</code></td><td>Mapbox ID for base layer of dark themed streets with labels.</td></tr>
+              <tr><td><code>mapboxStreetsLightLabels</code></td><td>Mapbox ID for base layer of light themed streets with labels.</td></tr>
+              <tr><td><code>mapboxTerrainLight</code></td><td>Mapbox ID for base layer of dark themed terrain and streets without labels.</td></tr>
+              <tr><td><code>mapboxTerrainDark</code></td><td>Mapbox ID for base layer of light themed terrain and streets without labels.</td></tr>
+              <tr><td><code>mapOptions</code></td><td>Object of common options for a Leaflet map.</td></tr>
+              <tr><td><code>mapStyle</code></td><td>Object of default vector (i.e. GeoJSON layer) style.</td></tr>
+              <tr><td><code>mapboxAttribution</code></td><td>HTML for Mapbox attribution.</td></tr>
+              <tr><td><code>openstreetmapAttribution</code></td><td>HTML for OSM attribution.</td></tr>
+              <tr><td><code>makeLeafletMap</code></td><td>A function taking <code>(domID, mapboxBaseName, centerPoint)</code> that creates a Leaflet map.  Returns the map object.</td></tr>
+              <tr><td><code>makeMakiIcon</code></td><td>A function taking <code>(iconName, sizeName, color)</code> that generates a Leaflet marker icon that uses a <a href="https://www.mapbox.com/maki/">Maki icon</a>.</td></tr>
+              <tr><td><code>TooltipControl</code></td><td>A basic Leaflet control class for an updatable tooltip.  Use methods <code>update, show, hide</code> to control content and show or hide the tooltip.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Attribution</h3>
+
+        <p>With most map services like OpenStreetMap and Mapbox, their terms of use require attribution of some sort.  The requirement is usually to have a link on the page, not necessarily on the map.  By default, the attribution control is added to a Leaflet map.  This should remove for style consistency.  Using <code>MP.maps.makeLeafletMap()</code> will automatically remove the attribution.</p>
+
+<pre><code>// Remove attribute
+map.removeControl(map.attributionControl);
+// Handy attribution to add to a footnote
+MP.maps.mapboxAttribution;
+MP.maps.openstreetmapAttribution; </code></pre>
+
+        <div class="example">
+          <div class="footnote">
+            <p>Map attribution.  <span class="map-attribution"></span></p>
+          </div>
+        </div>
+        <div class="example-code">
+  <pre><code> </code></pre>
+        </div>
+
+        <h3>Basic leaflet map</h3>
+
+        <p>You can switch the different base maps that we have created through Mapbox.  If you are not making a MinnPost project, please use your own base layers as their use costs us money.</p>
+
+        <div class="example">
+          <div class="button-group map-baselayer-choices">
+            <button class="button" data-map="mapboxSatelliteStreets">Satellite</button>
+            <button class="button" data-map="mapboxStreetsDarkLabels">Streets (Dark)</button>
+            <button class="button active" data-map="mapboxStreetsLightLabels">Streets (Light)</button>
+            <button class="button" data-map="mapboxTerrainLight">Terrain (Light, No Labels)</button>
+            <button class="button" data-map="mapboxTerrainDark">Terrain (Dark, No Labels)</button>
+          </div>
+
+          <div class="map" id="example-leaflet-map"></div>
+
+          <div class="footnote">
+            <p>Map attribution.  <span class="map-attribution"></span></p>
+          </div>
+        </div>
+
+        <h3>Markers and features</h3>
+
+        <p>The <a href="https://www.mapbox.com/maki/">Maki icon set</a> provided by Mapbox is a basic icon set focused on points of interests.  Mapbox provides a <a href="https://www.mapbox.com/developers/api/#Stand-alone.markers">static API for the icons</a> that can be used to make markers pretty easily.  There is a simple icon factory method in <code>MP.maps</code>.</p>
+
+        <pre><code>var icon = MP.maps.makeMakiIcon('cinema', 'm', '232323'); </code></pre>
+
+        <p>For non-marker feature, like polygons, there is a default style provided under <code>MP.maps.mapStyle</code>.  Also, for simple tooltip static hovers, there is a <code>MP.maps.TooltipControl</code> Leaflet control to easily manage tooltips.</p>
+
+        <div class="example">
+          <div class="map" id="example-markers-features-map"></div>
+
+          <div class="footnote">
+            <p>Map attribution.  <span class="map-attribution"></span></p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>
+// Marker map
+var markerMap = MP.maps.makeLeafletMap('example-markers-features-map');
+var tooltipControl = new MP.maps.TooltipControl();
+markerMap.setZoom(9);
+markerMap.addControl(tooltipControl);
+
+// Markers
+var iconCinema = MP.maps.makeMakiIcon('cinema', 'm');
+var iconBlank = MP.maps.makeMakiIcon('', 's', '222222');
+L.marker(MP.maps.minneapolisPoint, { icon: iconCinema })
+  .addTo(markerMap).bindPopup('Minneapolis', {
+    closeButton: false
+  });
+L.marker(MP.maps.stPaulPoint, { icon: iconBlank })
+  .addTo(markerMap).bindPopup('St. Paul', {
+    closeButton: false
+  });
+
+// GeoJSON example
+$.getJSON('http://boundaries.minnpost.com/1.0/boundary/27-county-2010/?callback=?', function(data) {
+  if (data.simple_shape) {
+    L.geoJson(data.simple_shape, {
+      style: MP.maps.mapStyle,
+      onEachFeature: function(feature, layer) {
+        layer.on('mouseover', function(e) {
+          tooltipControl.update('Hennepin County');
+        });
+        layer.on('mouseout', function(e) {
+          tooltipControl.hide();
+        });
+      }
+    }).addTo(markerMap);
+  }
+});
+</code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="datatables">Datatables <a href="#datatables" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p><a href="http://datatables.net/">Datatables</a> is a plugin that makes tables searchable, filterable, paged, and more.  It is useful for providing lots of tabular data.  The MinnPost styling of DataTables requires FontAwesome icons; please see the appropriate section on how to include it.</p>
+
+        <div class="example">
+          <div class="datatable datatable-example">
+            <table></table>
+          </div>
+
+          <div class="footnote">
+            <p>Table data attribution.</p>
+          </div>
+        </div>
+        <div class="example-code">
+<pre><code>
+// Define specific about how the columns work.
+var tableColumns = $.extend(true, {}, {
+  0: { sTitle: 'Thing' },
+  1: { sTitle: 'Date' },
+  // Makes it so that the last name column sorts on
+  // both last and first name
+  4: {
+    sTitle: 'Last',
+    aDataSort: [4, 5]
+  },
+  5: {
+    sTitle: 'First',
+    bSortable: false
+  },
+  3: {
+    sTitle: 'Number',
+    bSearchable: false,
+    mRender: function(data, type, full) {
+      return MP.formatters.integer(parseFloat(data));
+    }
+  },
+  2: {
+    sTitle: 'Money',
+    sClass: 'money',
+    bSearchable: false,
+    mRender: function(data, type, full) {
+      return MP.formatters.currency(parseFloat(data));
+    }
+  }
+});
+var options = $.extend(true, {}, {
+  aaData: yourDataHere,
+  aoColumns: _.values(tableColumns)
+}, options);
+
+MP.datatables.makeTable($('.datatable-example'), options);
+</code></pre>
+        </div>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="storymap">StoryMap <a href="#storymap" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>See the <a href="demo/storymap.html" target="_self">StoryMap preview on this page</a>.</p>
+      </div>
+
+
+
+
+      <div class="section">
+        <h2 id="minnpost">MinnPost specific <a href="#minnpost" target="_self"><i class="fa fa-link xsmall"></i></a></h2>
+
+        <p>There are just a few classes that are specific to MinnPost's workflow.</p>
+
+        <div class="table-responsive-small">
+          <table class="striped">
+            <thead>
+              <tr><th>Class</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>minnpost-page-container</code></td><td>Mimics the page container on the MinnPost site.</td></tr>
+              <tr><td><code>minnpost-article-container</code></td><td>Provides a container that is the same size as a normal article page (with a sidebar).</td></tr>
+              <tr><td><code>minnpost-full-container</code></td><td>Provides a container that is the same size as a full page article (without a sidebar).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+    <script src="bower_components/holderjs/holder.js"></script>
+    <script data-main="demo/demo" src="bower_components/requirejs/require.js"></script>
+
+  </body>
+</html>

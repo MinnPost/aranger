@@ -1,0 +1,26 @@
+{
+  "name": "aranger",
+  "version": "0.0.1",
+  "homepage": "https://github.com/MinnPost/aranger",
+  "authors": [
+    "Alan Palazzolo <apalazzolo@minnpost.com>"
+  ],
+  "description": "Arrange things in a grid",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "minnpost-styles": "master",
+    "underscore": "~1.6.0",
+    "ractive": "~0.5.5",
+    "html5-boilerplate": "~4.3.0",
+    "ractive.drag.drop.js": "https://github.com/Nijikokun/ractive.drag.drop.js.git"
+  }
+}

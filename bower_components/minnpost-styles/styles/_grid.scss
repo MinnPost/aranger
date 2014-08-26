@@ -1,0 +1,56 @@
+/**
+ * Really basic fluid grid system
+ */
+
+
+.row {
+  @include clearfix();
+  margin-left: $grid-gutter * -1;
+  margin-right: $grid-gutter * -1;
+
+  // Make grid intervals
+  $intervals: ();
+  @for $i from 1 through 20 {
+    $intervals: append($intervals, ($i * 5));
+  }
+  @for $i from 1 through 2 {
+    $intervals: append($intervals, ($i / 3 * 100));
+  }
+
+  // Now make grid classes for each breakpoint
+  @each $r in $responsive-points {
+    $width: nth($r, 2);
+    $class: nth($r, 1);
+
+    // If the width is zero, then it should simple be
+    // the default
+    @if $width == 0 {
+      .column-#{$class} {
+        @include column();
+      }
+
+      @each $i in $intervals {
+
+        .column-#{$class}-#{floor($i)} {
+          @extend .column-#{$class};
+          width: $i * 1%;
+        }
+      }
+    }
+    @else {
+      @media (min-width: $width) {
+        .column-#{$class} {
+          @include column();
+        }
+
+        @each $i in $intervals {
+
+          .column-#{$class}-#{floor($i)} {
+            @extend .column-#{$class};
+            width: $i * 1%;
+          }
+        }
+      }
+    }
+  }
+}

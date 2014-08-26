@@ -1,0 +1,72 @@
+/**
+ * Navigation stuff
+ */
+
+.navigation {
+  margin-bottom: $space-vertical-margin;
+
+  ul {
+    @extend .clearfix;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+      position: relative;
+      display: block;
+      font-size: $text-size-large;
+
+      > a {
+        position: relative;
+        display: block;
+        padding: $space-vertical-padding $space-horizontal-padding;
+
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          //background-color: @nav-link-hover-bg;
+        }
+
+        &.active {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &.horizontal {
+    ul {
+
+      li {
+        float: left;
+
+        + li {
+          margin-left: $space-horizontal-margin;;
+        }
+      }
+    }
+  }
+}
+
+// Sticking is solely for navigation containers but most likely used
+// for them
+.stuck {
+  position: fixed;
+  min-height: 1em;
+  z-index: 99;
+
+  &.top {
+    background-color: $color-white;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 1em;
+    //border-bottom: 1px solid $color-light-gray;
+    padding: ($space-vertical-padding * 2) 0;
+    @include box-shadow(0px 2px 8px black(0.15));
+  }
+
+  &.container {
+    top: 0
+  }
+}

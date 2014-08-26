@@ -1,0 +1,46 @@
+{
+  "name": "minnpost-styles",
+  "homepage": "http://code.minnpost.com/minnpost-styles/",
+  "authors": [
+    "Alan Palazzolo <apalazzolo@minnpost.com>"
+  ],
+  "description": "Style framework for MinnPost interactive projects.",
+  "main": "dist/minnpost-styles.scss",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo",
+    "js",
+    ".gitignore",
+    "Gemfile",
+    "Gemfile.lock"
+  ],
+  "devDependencies": {
+    "holderjs": "~2.2.0",
+    "requirejs": "~2.1.10",
+    "highcharts": "~3.0.7",
+    "leaflet": "~0.7.1",
+    "datatables": "~1.9.4",
+    "chroma-js": "~0.5.6",
+    "StoryMapJS": "https://github.com/NUKnightLab/StoryMapJS.git#ac75f4a43b28c8fb7b4f4bb1eebcd6180c7384cb"
+  },
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "jquery": "~1.11",
+    "es5-shim": "~3.4.0"
+  },
+  "_release": "ed5aabb746",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ed5aabb746c5e705377114b5147b405cf64a7b60"
+  },
+  "_source": "git://github.com/MinnPost/minnpost-styles.git",
+  "_target": "master",
+  "_originalSource": "minnpost-styles",
+  "_direct": true
+}

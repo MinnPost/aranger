@@ -1,0 +1,35 @@
+/**
+ * Some styles for the colors.  Colors are actually
+ * stored in the _variables file.
+ */
+
+
+// Make helper classes for each interface color
+@each $c in $colors-interface {
+  .color-#{nth($c, 1)} {
+    color: nth($c, 2);
+  }
+  .bg-color-#{nth($c, 1)} {
+    background-color: nth($c, 2);
+  }
+}
+
+// Make helper classes for each data color
+@each $c in $colors-data {
+  .color-data-#{nth($c, 1)} {
+    color: nth($c, 2);
+  }
+  .bg-color-data-#{nth($c, 1)} {
+    background-color: nth($c, 2);
+  }
+}
+
+// Make helper classes for each politcal color
+@each $c in $colors-political {
+  .color-political-#{nth($c, 1)} {
+    color: nth($c, 2);
+  }
+  .bg-color-political-#{nth($c, 1)} {
+    background-color: nth($c, 2);
+  }
+}

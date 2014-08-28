@@ -13,6 +13,7 @@
 
     <script src="bower_components/modernizr/modernizr.js"></script>
 
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/minnpost-styles/dist/minnpost-styles.min.css">
     <link rel="stylesheet" href="styles/app.css">
   </head>
@@ -47,6 +48,15 @@
 
       <div class="arrange">
         <h3>Arrange</h3>
+
+        <div class="button-group small">
+          <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
+          <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
+          <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+
+
+        </div>
+
         <div class="aranger-grid cf">
           {{#cellsArray:c}}
             {{>cell}}
@@ -80,6 +90,7 @@
 
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/ractive/ractive.min.js"></script>
+    <script src="bower_components/ractive-events-tap/ractive-events-tap.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

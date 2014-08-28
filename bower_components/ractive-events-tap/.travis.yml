@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- '0.10'
+before_script:
+- npm install -g grunt-cli; chmod u+x scripts/deploy-to-gh-pages.sh; grunt
+script: ./scripts/deploy-to-gh-pages.sh
+env:
+  global:
+  - GH_REF: github.com/ractivejs/ractive-events-tap.git
+  - secure: kzeJbrHtNMdSjtJZKTW99IBDlzBGgyDuWOmYKx+pcdzA/w9UTf5XNRgKRjS6cY8M4GNFYCHn96epwsXENHQbOdg6LU8Ro6MkEUbRV0Ihqp8qG20xa75LgQfgR+bBfsF2NTPbggz6AFjF+cCRn9n9gKIvp/mqHFWBJRZ73uqQ5zA=
+branches:
+  only:
+    - master

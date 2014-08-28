@@ -18,9 +18,10 @@
     [5,7,"TX"],[10,7,"FL"],[1,8,"AS"],[2,8,"HI"],[11,9,"VI"],[12,9,"PR"]
   ];
   var template = document.getElementById('main-template-container').innerHTML;
-  var rows = 30;
-  var columns = 30;
+  var rows = 25;
+  var columns = 20;
   var cells = rows * columns;
+  var cellSize = 25;
   var db = localStorage;
   var dbName = 'aranger-arrangements';
   var View, r;
@@ -303,7 +304,8 @@
       cells: cells,
       rowsArray: _.range(rows),
       columnsArray: _.range(columns),
-      cellsArray: new Array(cells)
+      cellsArray: new Array(cells),
+      cellSize: cellSize
     }
   });
 

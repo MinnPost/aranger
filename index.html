@@ -49,12 +49,14 @@
       <div class="arrange">
         <h3>Arrange</h3>
 
-        <div class="button-group small">
-          <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
-          <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
-          <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+        <div class="arrange-controls">
+          <input type="range" min="10" max="40" value="{{ cellSize }}" title="Adjust cell size" >
 
-
+          <div class="button-group small">
+            <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
+            <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
+            <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+          </div>
         </div>
 
         <div class="aranger-grid cf">
@@ -73,12 +75,14 @@
           on-dragenter="cdragenter"
           on-dragover="cdragover"
           on-dragleave="cdragleave"
-          on-drop="cdrop">
+          on-drop="cdrop"
+          style="width: {{ cellSize }}px; height: {{ cellSize }}px;">
           {{#if cellsArray[c]}}
             <div data-index="{{ c }}" class="grid-item"
               draggable="true"
               on-dragstart="idragstart"
-              on-dragend="idragend">
+              on-dragend="idragend"
+              style="width: {{ cellSize - 1 }}px; height: {{ cellSize - 1 }}px; font-size: {{ cellSize / 2 }}px; line-height: {{ cellSize - 1 }}px;">
                 {{ cellsArray[c] }}
               </div>
           {{/if}}

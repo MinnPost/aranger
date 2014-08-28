@@ -24,6 +24,14 @@
   margin-bottom: 3em;
 }
 
+.mp .arrange-controls {
+  margin-bottom: 1em;
+}
+
+.mp .arrange-controls input {
+  margin-right: 1em;
+}
+
 .mp .aranger-grid {
   width: auto;
   border-collapse: collapse;

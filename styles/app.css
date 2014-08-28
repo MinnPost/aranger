@@ -12,6 +12,10 @@
   margin-bottom: 3em;
 }
 
+.mp .input textarea {
+  margin-bottom: 1em;
+}
+
 .mp .arrange {
   margin-bottom: 3em;
 }

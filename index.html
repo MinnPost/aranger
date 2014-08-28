@@ -32,14 +32,14 @@
 
     <script type="template/ractive" id="main-template-container">
       <h1>aRanger</h1>
-      <p class="description">A simple interface to arbitrarily arrange items in a grid, for something like a cartogram.</p>
+      <p class="description">A simple interface to arbitrarily arrange items in a grid for something like a cartogram.</p>
 
       <div class="input">
-        <h3>Input</h3>
+        <h3>Data</h3>
 
-        <p>Input a JSON array of items, such as <code>['a', 'b', 'c', 'd']</code>.</p>
+        <textarea class="input-text" value="{{ arrangementString }}"></textarea>
 
-        <textarea class="input-text" value="{{ itemsString }}"></textarea>
+        <p>To input new data, use either a JSON array of items, such as <code>['a', 'b', 'c', 'd']</code>, or an array of <code>[x, y, v]</code> triplets, such as <code>[ [0, 0, 'a'], [4, 0, 'b'], [1, 1, 'c'] ]</code>.</p>
       </div>
 
 

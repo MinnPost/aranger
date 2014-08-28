@@ -1,0 +1,4 @@
+# For GH Pages, we want all the build goodness
+!bower_components
+!dist
+!build

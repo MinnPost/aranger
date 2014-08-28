@@ -50,12 +50,25 @@
         <h3>Arrange</h3>
 
         <div class="arrange-controls">
-          <input type="range" min="10" max="40" value="{{ cellSize }}" title="Adjust cell size" >
+          <form role="form" class="form-inline">
 
-          <div class="button-group small">
-            <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
-            <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
-            <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+            <div class="form-item">
+              <input class="columns-intput" type="number" value="{{ columns }}" title="Number of columns "/>
+            </div>
+
+            <div class="form-item">
+              <input class="rows-intput" type="number" value="{{ rows }}" title="Number of rows "/>
+            </div>
+
+            <div class="form-item">
+              <input type="range" min="10" max="40" value="{{ cellSize }}" title="Adjust cell size" >
+            </div>
+
+            <div class="button-group">
+              <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
+              <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
+              <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+            </div>
           </div>
         </div>
 
@@ -67,7 +80,7 @@
       </div>
 
       <div class="footnote">
-        <p>Made by MinnPost</p>
+        <p>Made by <a href="//code.minnpost.com/" target="_blank">MinnPost</a>.  Code on <a href="//github.com/MinnPost/aranger" target="_blank">Github</a>.</p>
       </div>
 
       <!-- {{>cell}} -->

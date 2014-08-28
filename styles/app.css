@@ -25,11 +25,16 @@
 }
 
 .mp .arrange-controls {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 }
 
 .mp .arrange-controls input {
-  margin-right: 1em;
+  display: inline-block;
+}
+
+.mp .arrange-controls input[type="number"] {
+  display: inline-block;
+  max-width: 4em;
 }
 
 .mp .aranger-grid {
@@ -70,4 +75,8 @@
 
 .mp .aranger-grid .grid-cell.dragover {
   border: 1px solid red;
+}
+
+.mp .footnote {
+  margin-bottom: 4em;
 }

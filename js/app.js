@@ -18,10 +18,10 @@
     [5,7,"TX"],[10,7,"FL"],[1,8,"AS"],[2,8,"HI"],[11,9,"VI"],[12,9,"PR"]
   ];
   var template = document.getElementById('main-template-container').innerHTML;
-  var rows = 25;
-  var columns = 20;
+  var rows = 20;
+  var columns = 30;
   var cells = rows * columns;
-  var cellSize = 25;
+  var cellSize = 30;
   var db = localStorage;
   var dbName = 'aranger-arrangements';
   var View, r;
@@ -66,6 +66,36 @@
           if (_.isArray(n) && n.length > 0) {
             this.set('arrangement', this.cellsToArrangement(n));
           }
+        },
+
+        // Columns change
+        columns: function(n, o) {
+          var min = this.get('minColumns');
+
+          if (n && n != o) {
+            if (n <= min + 2) {
+              n = min + 2;
+            }
+            // Ensure its a whole number
+            this.set('columns', parseInt(n, 10));
+            // Update arrangement
+            this.set('cellsArray', this.arrangementToCells(this.get('arrangement')));
+          }
+        },
+
+        // Row change
+        rows: function(n, o) {
+          var min = this.get('minRows');
+
+          if (n && n != o) {
+            if (n <= min + 2) {
+              n = min + 2;
+            }
+            // Ensure its a whole number
+            this.set('rows', parseInt(n, 10));
+            // Update arrangement
+            this.set('cellsArray', this.arrangementToCells(this.get('arrangement')));
+          }
         }
       });
 
@@ -73,6 +103,8 @@
       this.on({
         // Perform undo
         undoAction: function(e) {
+          e.original.preventDefault();
+
           var undone = this.undo();
           if (undone) {
             this.set('arrangement', undone);
@@ -81,6 +113,8 @@
 
         // Reset storage
         actionStorageReset: function(e) {
+          e.original.preventDefault();
+
           if (window.confirm('Are you sure you want to reset your arrangement and any changes made?  You cannot undo this.')) {
             this.storageReset();
             this.initialLoad();
@@ -89,6 +123,7 @@
 
         // Reset storage
         actionResetArrangement: function(e) {
+          e.original.preventDefault();
           var a;
 
           if (window.confirm('Are you sure you want to reset your arrangement?')) {
@@ -161,6 +196,20 @@
           this.set('dragging', undefined);
         }
       });
+    },
+
+    // Computed properties
+    computed: {
+      minColumns: function() {
+        return _.max(this.get('arrangement'), function(d, di) {
+          return d[0];
+        })[0];
+      },
+      minRows: function() {
+        return _.max(this.get('arrangement'), function(d, di) {
+          return d[1];
+        })[1];
+      }
     },
 
     // Load initial data, from storage, or example
@@ -302,9 +351,6 @@
       rows: rows,
       columns: columns,
       cells: cells,
-      rowsArray: _.range(rows),
-      columnsArray: _.range(columns),
-      cellsArray: new Array(cells),
       cellSize: cellSize
     }
   });

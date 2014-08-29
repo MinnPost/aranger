@@ -43,7 +43,7 @@
           {{/if}}
           <i class="fa fa-github"></i>
           {{#if loggedIn }}
-            {{#if user }}<strong>user</strong>{{/if}} Logout
+            {{#if user }}<strong>{{ user.login }}</strong>{{/if}} Logout
           {{else}}
             Login
           {{/if}}

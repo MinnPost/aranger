@@ -26,8 +26,11 @@
   var cells = rows * columns;
   var cellSize = 30;
   var db = localStorage;
-  var githubClient = '04f0f4d8b3ade6000d8d';
-  var githubGatekeeper = 'http://mp-aranger-gatekeeper.herokuapp.com/';
+  var isLocal = !!window.location.href.match(/localhost:8080/);
+  var githubClient = (isLocal) ? '3815fdccb55b02f58aa7' : '04f0f4d8b3ade6000d8d';
+  var githubGatekeeper = (isLocal) ? 'http://mp-aranger-gk-local.herokuapp.com/' : 'http://mp-aranger-gatekeeper.herokuapp.com/';
+  var githubAuthorize = 'https://github.com/login/oauth/authorize?client_id=' +
+    githubClient + '&scope=gist,repo';
   var View, r;
 
 
@@ -43,6 +46,7 @@
 
       // Check for auth
       this.loadAuthCode();
+      this.loadUser();
 
       // Load data from storage or example
       this.initialLoad();
@@ -114,9 +118,12 @@
         // Login
         actionLogin: function(e) {
           e.original.preventDefault();
-          // To login, redirect to login
-          window.location.href = 'https://github.com/login/oauth/authorize?client_id=' +
-            githubClient + '&scope=gist,repo';
+          if (this.isLoggedIn()) {
+            this.authLogout();
+          }
+          else {
+            window.location.href = githubAuthorize;
+          }
         },
 
         // Perform undo
@@ -274,6 +281,20 @@
         // Remove code
         window.history.replaceState(undefined, undefined, path.replace(/\?code=.*$/, ''));
       }
+    },
+    // Load user info from cache
+    loadUser: function() {
+      if (this.isLoggedIn()) {
+        this.set('user', this.dbGet('auth-user'));
+        this.set('loggedIn', true);
+      }
+      else {
+        this.authLogout();
+      }
+    },
+    // Is logged in
+    isLoggedIn: function() {
+      return (this.dbGet('auth-token') && this.dbGet('auth-user'));
     },
     // Logout
     authLogout: function() {

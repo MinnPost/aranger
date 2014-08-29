@@ -35,7 +35,7 @@
 
     <script type="template/ractive" id="main-template-container">
       <div class="heading">
-        <button class="button primary small"
+        <button class="button {{^loggedIn}}primary{{/if}} small"
           disabled="{{ authLoading }}"
           title="{{#if loggedIn }}Logout{{else}}Login with Github to save your arrangements{{/if}}" on-tap="actionLogin">
           {{#if authLoading}}
@@ -83,8 +83,8 @@
 
             <div class="button-group">
               <!-- <button class="button primary" title="Undo" on-tap="undoAction"><i class="fa fa-undo"></i></button> -->
-              <button class="button primary" title="Reset arrangement" on-tap="actionResetArrangement"><i class="fa fa-refresh"></i></button>
-              <button class="button primary" title="Remove data (and reset arrangement)" on-tap="actionStorageReset"><i class="fa fa-times"></i></button>
+              <button class="button danger" title="Remove arrangement" on-tap="actionResetArrangement"><i class="fa fa-times"></i></button>
+              <button class="button danger" title="Remove all changes" on-tap="actionStorageReset"><i class="fa fa-refresh"></i></button>
             </div>
           </div>
         </div>

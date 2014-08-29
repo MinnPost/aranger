@@ -140,7 +140,7 @@
         actionStorageReset: function(e) {
           e.original.preventDefault();
 
-          if (window.confirm('Are you sure you want to reset your arrangement and any changes made?  You cannot undo this.')) {
+          if (window.confirm('Are you sure you want to remove all changes and essentially go back to when you first came to the page?  You cannot undo this.')) {
             this.storageReset();
             this.initialLoad();
           }
@@ -151,7 +151,7 @@
           e.original.preventDefault();
           var a;
 
-          if (window.confirm('Are you sure you want to reset your arrangement?')) {
+          if (window.confirm('Are you sure you want to remove all arranagement?')) {
             a = this.get('arrangement');
             a = _.map(a, function(i, ii) {
               return i[2];

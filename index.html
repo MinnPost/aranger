@@ -42,7 +42,11 @@
             <i class="fa fa-spinner fa-spin"></i>
           {{/if}}
           <i class="fa fa-github"></i>
-          {{#if loggedIn }}Logout{{else}}Login{{/if}}
+          {{#if loggedIn }}
+            {{#if user }}<strong>user</strong>{{/if}} Logout
+          {{else}}
+            Login
+          {{/if}}
         </button>
 
         <h1>aRanger</h1>

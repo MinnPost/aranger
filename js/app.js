@@ -28,8 +28,6 @@
   var db = localStorage;
   var githubClient = '04f0f4d8b3ade6000d8d';
   var githubGatekeeper = 'http://mp-aranger-gatekeeper.herokuapp.com/';
-  var dbName = 'aranger-arrangements';
-  var dbAuthName = 'aranger-auth';
   var View, r;
 
 
@@ -235,7 +233,9 @@
     // Authentication steps
     loadAuthCode: function() {
       var thisView = this;
-      var code = window.location.href.match(/\?code=(.*)/)[1];
+      var path = window.location.href;
+      var code = (path.match(/\?code=(.*)/)) ?
+        path.match(/\?code=(.*)/)[1] : undefined;
 
       if (code) {
         this.set('authLoading', true);
@@ -243,17 +243,45 @@
           url:  githubGatekeeper + 'authenticate/' + code
         })
           .done(function(data) {
-            thisView.set('authLoading', false);
+            if (data.token) {
+              thisView.dbSet('auth-token', data.token);
 
-            if (data.error) {
-
+              // Get basic user info from Github
+              $.ajax({
+                url: 'https://api.github.com/user',
+                headers: {
+                  'Authorization': 'token ' + data.token
+                }
+              })
+                .done(function(userData) {
+                  thisView.dbSet('auth-user', userData);
+                  thisView.set('user', userData);
+                  thisView.set('loggedIn', true);
+                  thisView.set('authLoading', false);
+                })
+                .fail(function() {
+                  thisView.authLogout();
+                });
             }
             else {
-              console.log(data);
-
+              thisView.authLogout();
             }
+          })
+          .fail(function() {
+            thisView.authLogout();
           });
+
+        // Remove code
+        window.history.replaceState(undefined, undefined, path.replace(/\?code=.*$/, ''));
       }
+    },
+    // Logout
+    authLogout: function() {
+      this.dbRemove('auth-token');
+      this.dbRemove('auth-user');
+      this.set('user', undefined);
+      this.set('loggedIn', false);
+      this.set('authLoading', false);
     },
 
     // Load initial data, from storage, or example
@@ -270,7 +298,7 @@
 
     // CRUD operations for local storage
     storageSave: function() {
-      var stored = JSON.parse(db.getItem(dbName));
+      var stored = this.dbGet('arrangements');
       stored = (_.isArray(stored)) ? stored : [];
 
       // Handle undo stack.  If undefined, then we have not
@@ -286,22 +314,22 @@
 
       stored.push(this.get('arrangement'));
       this.undoIndex = stored.length - 1;
-      db.setItem(dbName, JSON.stringify(stored));
+      this.dbSet('arrangements', stored);
     },
     storageLoad: function() {
-      var stored = JSON.parse(db.getItem(dbName));
+      var stored = this.dbGet('arrangements');
       stored = (_.isArray(stored)) ? stored : [];
       this.undoIndex = stored.length - 1;
       return (stored.length === 0) ? undefined : stored[stored.length - 1];
     },
     storageReset: function() {
       this.undoIndex = undefined;
-      db.setItem(dbName, JSON.stringify([]));
+      this.dbSet('arrangements', []);
     },
 
     // Undo and redo
     undo: function() {
-      var stored = JSON.parse(db.getItem(dbName));
+      var stored = this.dbGet('arrangements');
       stored = (_.isArray(stored)) ? stored : [];
 
       if (stored.length > 1) {
@@ -386,6 +414,17 @@
 
       // Merge back in
       this.set('cellsArray', cells);
+    },
+
+    // Base DB operations
+    dbSet: function(key, value) {
+      db.setItem('aranger-' + key, JSON.stringify(value));
+    },
+    dbGet: function(key, value) {
+      return JSON.parse(db.getItem('aranger-' + key));
+    },
+    dbRemove: function(key, value) {
+      db.removeItem('aranger-' + key);
     }
   });
 

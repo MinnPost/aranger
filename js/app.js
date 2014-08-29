@@ -3,6 +3,9 @@
  *
  * Example inspired by:
  * http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/
+ *
+ * Github Oauth with:
+ * https://github.com/prose/gatekeeper#oauth-steps
  */
 
 (function() {
@@ -23,8 +26,14 @@
   var cells = rows * columns;
   var cellSize = 30;
   var db = localStorage;
+  var githubClient = '04f0f4d8b3ade6000d8d';
+  var githubGatekeeper = 'http://mp-aranger-gatekeeper.herokuapp.com/';
   var dbName = 'aranger-arrangements';
+  var dbAuthName = 'aranger-auth';
   var View, r;
+
+
+
 
   // Make ractive view handler which will hold most of our methods
   View = Ractive.extend({
@@ -33,6 +42,9 @@
 
     init: function() {
       var thisView = this;
+
+      // Check for auth
+      this.loadAuthCode();
 
       // Load data from storage or example
       this.initialLoad();
@@ -101,6 +113,14 @@
 
       // Events.  Drag 'c' is cell event, and 'i' is for item event
       this.on({
+        // Login
+        actionLogin: function(e) {
+          e.original.preventDefault();
+          // To login, redirect to login
+          window.location.href = 'https://github.com/login/oauth/authorize?client_id=' +
+            githubClient + '&scope=gist,repo';
+        },
+
         // Perform undo
         undoAction: function(e) {
           e.original.preventDefault();
@@ -209,6 +229,30 @@
         return _.max(this.get('arrangement'), function(d, di) {
           return d[1];
         })[1];
+      }
+    },
+
+    // Authentication steps
+    loadAuthCode: function() {
+      var thisView = this;
+      var code = window.location.href.match(/\?code=(.*)/)[1];
+
+      if (code) {
+        this.set('authLoading', true);
+        $.ajax({
+          url:  githubGatekeeper + 'authenticate/' + code
+        })
+          .done(function(data) {
+            thisView.set('authLoading', false);
+
+            if (data.error) {
+
+            }
+            else {
+              console.log(data);
+
+            }
+          });
       }
     },
 

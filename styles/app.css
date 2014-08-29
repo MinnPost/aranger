@@ -4,8 +4,12 @@
   display: none;
 }
 
-.mp h1 {
+.mp .heading h1 {
   margin-bottom: 0.15em;
+}
+
+.mp .heading button {
+  float: right;
 }
 
 .mp .description {

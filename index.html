@@ -34,8 +34,21 @@
     </div>
 
     <script type="template/ractive" id="main-template-container">
-      <h1>aRanger</h1>
-      <p class="description">A simple interface to arbitrarily arrange items in a grid for something like a cartogram.</p>
+      <div class="heading">
+        <button class="button primary small"
+          disabled="{{ authLoading }}"
+          title="{{#if loggedIn }}Logout{{else}}Login with Github to save your arrangements{{/if}}" on-tap="actionLogin">
+          {{#if authLoading}}
+            <i class="fa fa-spinner fa-spin"></i>
+          {{/if}}
+          <i class="fa fa-github"></i>
+          {{#if loggedIn }}Logout{{else}}Login{{/if}}
+        </button>
+
+        <h1>aRanger</h1>
+
+        <p class="description">A simple interface to arbitrarily arrange items in a grid for something like a cartogram.</p>
+      </div>
 
       <div class="input">
         <h3>Data</h3>
@@ -105,9 +118,11 @@
 
 
 
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/ractive/ractive.min.js"></script>
     <script src="bower_components/ractive-events-tap/ractive-events-tap.js"></script>
+    <script src="bower_components/github/github.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

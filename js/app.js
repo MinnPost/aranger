@@ -6,6 +6,8 @@
  *
  * Github Oauth with:
  * https://github.com/prose/gatekeeper#oauth-steps
+ *
+ * This code is not model code; get over it.
  */
 
 (function() {
@@ -53,12 +55,32 @@
 
       // Observations
       this.observe({
+        gist: function(n, o) {
+          var path = this.urlGet();
+          var userData = this.get('user');
+
+          if (n && n !== o) {
+            this.urlSet(path.hash(n));
+            // Note if current gist is owned by logged in person
+            this.set('notOwnGist', (_.isObject(userData)) ?
+              this.get('gistOwner') !== userData.login : true);
+          }
+        },
+
         // If items change through the interface, then update data
         // structure
         arrangementString: function(n, o) {
           var p;
 
           if (_.isString(n) && n.length > 0) {
+            // Wrap so that incomplete input will be ok
+            try {
+              JSON.parse(n);
+            }
+            catch (e) {
+              return false;
+            }
+
             p = JSON.parse(n);
             p = this.standardizeArrangement(p);
             this.set('arrangement', p);
@@ -115,6 +137,12 @@
 
       // Events.  Drag 'c' is cell event, and 'i' is for item event
       this.on({
+        // Save to gist
+        actionSaveGist: function(e, saveNew) {
+          e.original.preventDefault();
+          this.saveGist(saveNew);
+        },
+
         // Login
         actionLogin: function(e) {
           e.original.preventDefault();
@@ -140,7 +168,7 @@
         actionStorageReset: function(e) {
           e.original.preventDefault();
 
-          if (window.confirm('Are you sure you want to remove all changes and essentially go back to when you first came to the page?  You cannot undo this.')) {
+          if (window.confirm('Are you sure you want to remove all changes ever made to this and other arrangements?  You cannot undo this.')) {
             this.storageReset();
             this.initialLoad();
           }
@@ -237,12 +265,77 @@
       }
     },
 
+    // Load Gist
+    loadGist: function() {
+      var thisView = this;
+      var path = window.location.href;
+      var id = (path.match(/#(.*)$/)) ? path.match(/#(.*)$/)[1] : false;
+      var gist;
+
+      if (id) {
+        gist = this.githubAPI.getGist(id);
+        this.set('gistLoading', true);
+        gist.read(function(error, data) {
+          if (error) {
+            // Handle error
+          }
+          else {
+            if (_.isObject(data.files) && 'aranger.json' in data.files) {
+              thisView.set('arrangementString', data.files['aranger.json'].content);
+              thisView.set('gistOwner', data.owner.login);
+              thisView.set('gist', id);
+            }
+            else {
+              // Gist loaded but no aranger file
+            }
+          }
+          thisView.set('gistLoading', false);
+        });
+
+        return true;
+      }
+      return false;
+    },
+
+    // Save to gist
+    saveGist: function(saveNew) {
+      var thisView = this;
+      var newGist = (saveNew === true) ? true : ((this.get('gist')) ? false : true);
+      var id = (newGist) ? 'new' : this.get('gist');
+      var method = (newGist) ? 'create' : 'update';
+      var gistData = {
+        'description': 'An aRanger arrangment.',
+        'public': true,
+        'files': {
+          'aranger.json': {
+            'content': this.get('arrangementString')
+          },
+          'README.md': {
+            'content': 'An arrangement of items made through [aRanger](http://code.minnpost.com/aranger/).'
+          }
+        }
+      };
+      var gist = new Github.Gist({ id: id });
+
+      thisView.set('gistLoading', true);
+      gist[method](gistData, function(error, data) {
+        if (error) {
+          // Handle error
+        }
+        else {
+          thisView.set('gistOwner', thisView.dbGet('auth-user').login);
+          thisView.set('gist', data.id);
+        }
+        thisView.set('gistLoading', false);
+      });
+    },
+
     // Authentication steps
     loadAuthCode: function() {
       var thisView = this;
-      var path = window.location.href;
-      var code = (path.match(/\?code=(.*)/)) ?
-        path.match(/\?code=(.*)/)[1] : undefined;
+      var path = this.urlGet();
+      var code = (_.isObject(path.search(true)) && path.search(true).code) ?
+        path.search(true).code : undefined;
 
       if (code) {
         this.set('authLoading', true);
@@ -265,6 +358,10 @@
                   thisView.set('user', userData);
                   thisView.set('loggedIn', true);
                   thisView.set('authLoading', false);
+                  thisView.githubAPI = new Github({
+                    token: data.token,
+                    auth: 'oauth'
+                  });
                 })
                 .fail(function() {
                   thisView.authLogout();
@@ -279,7 +376,7 @@
           });
 
         // Remove code
-        window.history.replaceState(undefined, undefined, path.replace(/\?code=.*$/, ''));
+        this.urlSet(path.search(null));
       }
     },
     // Load user info from cache
@@ -287,9 +384,18 @@
       if (this.isLoggedIn()) {
         this.set('user', this.dbGet('auth-user'));
         this.set('loggedIn', true);
+        this.githubAPI = new Github({
+          token: this.dbGet('auth-token'),
+          auth: 'oauth'
+        });
       }
       else {
         this.authLogout();
+        // Anonymous API
+        this.githubAPI = new Github({
+          token: this.dbGet('auth-token'),
+          auth: 'oauth'
+        });
       }
     },
     // Is logged in
@@ -303,14 +409,18 @@
       this.set('user', undefined);
       this.set('loggedIn', false);
       this.set('authLoading', false);
+      this.githubAPI = undefined;
     },
 
     // Load initial data, from storage, or example
     initialLoad: function() {
-      var existing = this.storageLoad();
+      var storage = this.storageLoad();
 
-      if (existing) {
-        this.set('arrangementString', JSON.stringify(existing));
+      if (this.loadGist()) {
+        // Nothing, gist will load async
+      }
+      else if (storage) {
+        this.set('arrangementString', JSON.stringify(storage));
       }
       else {
         this.set('arrangementString', JSON.stringify(exampleItems));
@@ -446,6 +556,19 @@
     },
     dbRemove: function(key, value) {
       db.removeItem('aranger-' + key);
+    },
+
+    // URL operations
+    urlGet: function() {
+      return new URI(window.location.href);
+    },
+    urlSet: function(uri, trigger) {
+      if (trigger === true) {
+        window.history.pushState(undefined, undefined, uri.toString());
+      }
+      else {
+        window.history.replaceState(undefined, undefined, uri.toString());
+      }
     }
   });
 

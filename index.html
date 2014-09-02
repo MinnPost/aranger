@@ -70,11 +70,11 @@
           <form role="form" class="form-inline">
 
             <div class="form-item">
-              <input class="columns-intput" type="number" value="{{ columns }}" title="Number of columns "/>
+              <input class="columns-intput" min="{{ minColumns + 2 }}" max="100" type="number" value="{{ columns }}" title="Number of columns "/>
             </div>
 
             <div class="form-item">
-              <input class="rows-intput" type="number" value="{{ rows }}" title="Number of rows "/>
+              <input class="rows-intput" min="{{ minRows + 2 }}" max="100" type="number" value="{{ rows }}" title="Number of rows "/>
             </div>
 
             <div class="form-item">

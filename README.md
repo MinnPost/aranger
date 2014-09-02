@@ -6,12 +6,12 @@ A simple way to arrange items in a grid.  A live version can be found at [code.m
 
 In able to login with Github (and save arrangements), Github oath requires a small server-side proxy.  This app is setup to use [Gatekeeper](https://github.com/prose/gatekeeper).
 
-Running on Heroku through Alan's account:
+Running on Heroku:
 
 * For local: http://mp-aranger-gk-local.herokuapp.com
 * For production: http://mp-aranger-gatekeeper.herokuapp.com
 
-Github applications are setup through MinnPost's account:
+Github applications are setup:
 
 * For local, Github application ID `126989`.
 * For production, Github application ID `126783`.
@@ -25,7 +25,7 @@ Any web server will do, but a simple one is [http-server](https://github.com/nod
 1. `npm install http-server -g`
 2. `http-server -p 8080`
 
-## Deploying
+## Deploy
 
 Except for Gatekeeper, the application is all frontend and could easily run on something like [Github Pages](https://pages.github.com/).
 

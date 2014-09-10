@@ -193,6 +193,11 @@
           var i = parseInt(e.node.getAttribute('data-index'), 10);
           var value = this.get('cellsArray.' + i);
 
+          // Firefox really wants some data hooked onto
+          // the drag
+          var dt = e.original.dataTransfer;
+          dt.setData('ff', 'data');
+
           // Visually mark
           e.node.classList.add('dragging');
           // Attach data to dragging placeholder
